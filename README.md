@@ -120,9 +120,6 @@ Les principales interfaces de l'application sont présentées ci-dessous.
 
 ![Compétitions](screenshots/espace_admin_3.png)
 
-### 🛠️ Tableau de bord administrateur
-
-![Dashboard administrateur](screenshots/dashboard-admin.png)
 
 > Les captures d'écran seront ajoutées dans le dossier `screenshots/`.
 
@@ -163,9 +160,6 @@ La configuration de connexion à la base de données se trouve dans :
 ```text
 backend/src/main/resources/application.properties
 ```
-
-> Les informations sensibles telles que les mots de passe et identifiants doivent être configurées localement et ne doivent pas être publiées sur GitHub.
-
 ---
 
 ### 4. Lancer le Backend
