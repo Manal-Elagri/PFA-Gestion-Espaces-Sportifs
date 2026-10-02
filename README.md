@@ -5,7 +5,7 @@ Application web full-stack développée dans le cadre du **Projet de Fin d’Ann
 La plateforme permet de gérer les terrains sportifs, les réservations, les compétitions, les équipes et les différents profils utilisateurs à travers des espaces dédiés.
 
 ---
-
+ 
 ## 📌 Présentation
 
 L'application est composée de trois éléments principaux :
