@@ -1,0 +1,96 @@
+<navbar></navbar>
+
+
+<!-- Router outlet pour les routes client -->
+<router-outlet></router-outlet>
+
+<main>
+	
+	  
+	<section id="home" class="flex-row">
+		<div class="wrapper home-content">
+			<div>
+				<h1>Votre Espace Sportif </h1>
+            <p>
+	        Bienvenue sur la plateforme officielle de gestion des espaces sportives de l’ENSAJ. Réservez vos Terrains, organisez vos entraînements et restez connecté à l’activité sportive du campus.
+            </p>
+			<button class="btn btn-success" (click)="goToLogin()">Réserver un Terrain</button>
+           
+
+			</div>
+		</div>
+	</section>
+
+	<section id="special-dishes">
+		<div class="title-center">
+			<h2> Événements Spéciaux</h2>
+			<p>
+				Découvrez nos compétitions sportives, soigneusement organisées pour défier vos compétences et favoriser l'esprit d'équipe. Une série d'événements captivants qui vous permettront de vous mesurer aux meilleurs et de vivre une expérience unique sur notre campus.
+			</p>
+			
+		</div>
+		<div class="wrapper">
+			<card-carousel></card-carousel>
+		</div>
+	</section>
+
+	<section id="about-us">
+		<about></about>
+	</section>
+
+
+
+	<section id="terrain">
+		<team></team>
+	</section>
+
+    <section id="terrain">
+        <menu></menu>
+
+    </section>
+	
+	
+
+	<section id="gallery">
+		<div class="title-center">  
+			<h2 class="title-with-icon">
+			<img src="../../assets/terrain-de-football.png" alt="Icon terrain" />
+		  Activités</h2>
+		</div>
+		<div class="wrapper flex-row gallery-item zoom-gallery">
+			<a href="../../assets/gallery/gal3.jpg">
+				<img src="../../assets/gallery/gal3.jpg" />
+			</a>
+			<a href="../../assets/gallery/gal1.jpeg">
+				<img src="../../assets/gallery/gal1.jpeg" />
+			</a>
+			<a href="../../assets/gallery/gal6.jpeg">
+				<img src="../../assets/gallery/gal6.jpeg" />
+			</a>
+			<a href="../../assets/gallery/gal2.jpeg">
+				<img src="../../assets/gallery/gal2.jpeg" />
+			</a>
+			<a href="../../assets/gallery/gal4.jpeg">
+				<img src="../../assets/gallery/gal4.jpeg" />
+			</a>
+			<a href="../../assets/gallery/gal5.jpeg">
+				<img src="../../assets/gallery/gal5.jpeg" />
+			</a>
+		</div>
+	</section>
+
+	<!--section id="booking-table">
+		<div class="title-center">
+			<h2>Réservez votre table</h2>
+		</div>
+		<booking-form></booking-form>
+	</section-->
+</main>
+
+<footer id="contacts"></footer>
+
+<a class="btn" id="scroll-top" href="#" *ngIf="hasScrolledPastHome">
+	<i class="fa-solid fa-arrow-up-long"></i>
+</a>
+ 
+

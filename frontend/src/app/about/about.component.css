@@ -1,0 +1,115 @@
+#about-us {
+	background: linear-gradient(45deg, #ff3399, #66ccff);
+	background-size: 200% 200%;
+	/*animation: gradientAnimation 8s ease infinite;*/
+  }
+  
+  .wrapper.flex-row .about-content h2 {
+	padding-left: 90px;
+	position: relative;
+	animation: slideInLeft 1.5s ease;
+  }
+  
+  #about-us .wrapper.flex-row {
+    justify-content: space-around;
+}
+
+.wrapper.flex-row .about-img > a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    color: #000;
+    text-decoration: none;
+    border-radius: 50%;
+    font-family: "FontAwesome" !important;
+    background: #ffcc00;
+    /* Vous pouvez ajouter un effet de transition si vous le souhaitez */
+    transition: background 0.3s ease;
+}
+
+.wrapper.flex-row .about-img > a:hover {
+    background: #e65c00;
+}
+
+  
+  .wrapper.flex-row .about-content {
+	box-sizing: border-box;
+  }
+  
+  .wrapper.flex-row .about-img img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 15px;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+	transition: transform 0.5s ease;
+  }
+  
+  .wrapper.flex-row .about-img img:hover {
+	transform: scale(1.1);
+  }
+  
+  .wrapper.flex-row .about-content p {
+	margin-bottom: 20px;
+  }
+  
+  .advantage.flex-row {
+	justify-content: space-around;
+	margin-top: 50px;
+	
+  }
+  
+  .advantage.flex-row > div {
+	text-align: center;
+	width: 30%;
+	padding: 20px;
+	box-sizing: border-box;
+	background: rgba(28, 27, 27, 0.9);
+	border-radius: 10px;
+	transition: transform 0.5s ease;
+  }
+  
+  .advantage.flex-row > div:hover {
+	transform: translateY(-10px);
+  }
+  
+  .advantage.flex-row > div img {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    width: 50%; /* Ajustez cette valeur selon la taille que vous souhaitez */
+    max-width: 100px; /* Vous pouvez définir une taille maximale si nécessaire */
+    height: auto; /* Maintient les proportions de l'image */
+}
+  
+  #about-us .advantage.flex-row > div p {
+	text-transform: uppercase;
+	font-size: 14px;
+	color: #000;
+  }
+  
+  @keyframes gradientAnimation {
+	0% {
+	  background-position: 0% 0%;
+	}
+	50% {
+	  background-position: 100% 0%;
+	}
+	100% {
+	  background-position: 0% 0%;
+	}
+  }
+  
+  @keyframes slideInLeft {
+	0% {
+	  opacity: 0;
+	  transform: translateX(-30px);
+	}
+	100% {
+	  opacity: 1;
+	  transform: translateX(0);
+	}
+  }
+  

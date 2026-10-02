@@ -1,0 +1,101 @@
+<div class="register-container">
+  <div class="auth-card-wrapper">
+    <!-- Image côté gauche -->
+    <div class="image-container">
+      <img src="../../assets/image-1.jpg" alt="Register Image" class="register-image">
+    </div>
+    
+    <!-- Formulaire côté droit -->
+    <div class="form-container">
+        <div class="form-header">
+          <h2>Inscription Étudiant</h2>
+          <p>Créez votre compte étudiant responsable pour accéder à SPORT&ENSAJ</p>
+          <button class="close-btn" (click)="closeForm()">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+        
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+            <!-- Champ caché pour le type -->
+         <input type="hidden" formControlName="type" value="etudiant">
+
+
+         <div *ngIf="successMessage" class="alert alert-success">
+          {{ successMessage }}
+        </div>
+        
+          <div class="alert alert-danger" *ngIf="error">{{error}}</div>
+          
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="nom">Nom</label>
+              <input type="text" id="nom" formControlName="nom_responsable" class="form-control" 
+                [ngClass]="{ 'is-invalid': submitted && registerForm.get('nom_responsable')?.errors }">
+              <div *ngIf="submitted && registerForm.get('nom_responsable')?.errors" class="invalid-feedback">
+                <div *ngIf="registerForm.get('nom_responsable')?.errors?.['required']">Le nom est obligatoire</div>
+              </div>
+            </div>
+            
+            <div class="col-md-6 mb-3">
+              <label for="prenom">Prénom</label>
+              <input type="text" id="prenom" formControlName="prenom_responsable" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && registerForm.get('prenom_responsable')?.errors }">
+              <div *ngIf="submitted && registerForm.get('prenom_responsable')?.errors" class="invalid-feedback">
+                <div *ngIf="registerForm.get('prenom_responsable')?.errors?.['required']">Le prénom est obligatoire</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label for="email">Email</label>
+            <input type="email" id="email" formControlName="email" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && registerForm.get('email')?.errors }">
+            <div *ngIf="submitted && registerForm.get('email')?.errors" class="invalid-feedback">
+              <div *ngIf="registerForm.get('email')?.errors?.['required']">L'email est obligatoire</div>
+              <div *ngIf="registerForm.get('email')?.errors?.['email']">Entrez un email valide</div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label for="filière">Filière</label>
+            <select id="filière" formControlName="filière" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && registerForm.get('filière')?.errors }">
+              <option value="">Sélectionnez votre filière</option>
+              <option value="GINFO">Génie Informatique</option>
+              <option value="GINDUS">Génie Industriel</option>
+              <option value="GPMC">Génie des Procédés</option>
+              <option value="GSEA">Génie des Systèmes Électroniques et Automatiques</option>
+            </select>
+            <div *ngIf="submitted && registerForm.get('filière')?.errors" class="invalid-feedback">
+              <div *ngIf="registerForm.get('filière')?.errors?.['required']">La filière est obligatoire</div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" formControlName="password" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && registerForm.get('password')?.errors }">
+            <div *ngIf="submitted && registerForm.get('password')?.errors" class="invalid-feedback">
+              <div *ngIf="registerForm.get('password')?.errors?.['required']">Le mot de passe est obligatoire</div>
+              <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères</div>
+            </div>
+          </div>
+          
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" [disabled]="loading || registerForm.invalid">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              S'inscrire
+            </button>
+            <p class="mt-3">Déjà un compte? <a href="javascript:void(0)" (click)="redirectToLogin()">Se connecter</a></p>
+          </div>
+          <div *ngIf="successMessage" class="alert alert-success">
+            {{ successMessage }}
+          </div>
+          
+          
+        </form>
+      </div>
+    </div>
+  </div>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">

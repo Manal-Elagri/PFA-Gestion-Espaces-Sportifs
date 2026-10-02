@@ -1,0 +1,101 @@
+<section id="menu">
+	<div class="title-center">
+	  <h2 class="title-with-icon">
+		<img src="../../assets/competition.png" alt="Icon competition" />Compétitions
+	  </h2>
+	</div>
+	
+	<!-- Categories / États des compétitions -->
+	<div class="categories-container">
+	  <nav class="category-nav">
+		<ul class="category-list">
+		  <li><a [class.active]="activeCategory === 'TOUS'" (click)="filterCompetitions('TOUS')">Tous</a></li>
+		  <li *ngFor="let etat of etatCompetitions">
+			<a [class.active]="activeCategory === etat" (click)="filterCompetitions(etat)">{{ etat }}</a>
+		  </li>
+		</ul>
+	  </nav>
+	</div>
+	
+	<!-- Grid des compétitions -->
+	<div class="menu-grid">
+	  <div class="menu-items-container">
+		<div class="menu-card" *ngFor="let competition of filteredCompetitions">
+		  <div class="menu-card-image">
+			<img [src]="competition.imageURL || '../../assets/default-competition.jpg'" alt="{{ competition.nom }}">
+		  </div>
+		  <div class="menu-card-content">
+			<h3>{{ competition.nom }}</h3>
+				<div class="competition-info">
+			  <div class="info-item">
+				<span class="info-label">Type:</span>
+				<span class="info-value">{{ competition.typedesport }}</span>
+			  </div>
+			  <div class="info-item">
+				<span class="info-label">Catégorie:</span>
+				<span class="info-value">{{ competition.categorieCompetition }}</span>
+			  </div>
+			  <div class="info-item">
+				<span class="info-label">Date:</span>
+				<span class="info-value">{{ competition.dateDebut | date:'dd/MM/yyyy' }} - {{ competition.dateFin | date:'dd/MM/yyyy' }}</span>
+			  </div>
+			</div>
+			<div class="price-order">
+			  <div class="status" [ngClass]="getStatusClass(competition.etatCompetition)">
+				{{ competition.etatCompetition }}
+			  </div>
+			  <button class="order-button" (click)="viewDetails(competition.id)">Détails</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Modal de détails de la compétition -->
+<div class="competition-modal" *ngIf="selectedCompetition">
+	<div class="modal-content">
+	  <button class="close-button" (click)="closeDetails()">×</button>
+	  <div class="modal-body">
+		<div class="modal-image">
+		  <img [src]="selectedCompetition.imageURL || '../../assets/default-competition.jpg'" alt="{{ selectedCompetition.nom }}">
+		</div>
+		<div class="modal-info">
+		  <h2>{{ selectedCompetition.nom }}</h2>
+		  <p class="modal-description">{{ selectedCompetition.description }}</p>
+		  
+		  <div class="modal-detail-item">
+			<span class="detail-label">Type de sport:</span>
+			<span class="detail-value">{{ selectedCompetition.typedesport }}</span>
+		  </div>
+		  
+		  <div class="modal-detail-item">
+			<span class="detail-label">Catégorie:</span>
+			<span class="detail-value">{{ selectedCompetition.categorieCompetition }}</span>
+		  </div>
+		  
+		  <div class="modal-detail-item">
+			<span class="detail-label">Date de début:</span>
+			<span class="detail-value">{{ selectedCompetition.dateDebut | date:'dd/MM/yyyy' }}</span>
+		  </div>
+		  
+		  <div class="modal-detail-item">
+			<span class="detail-label">Date de fin:</span>
+			<span class="detail-value">{{ selectedCompetition.dateFin | date:'dd/MM/yyyy' }}</span>
+		  </div>
+		  
+		  <div class="modal-detail-item">
+			<span class="detail-label">État:</span>
+			<span class="detail-value status-badge" [ngClass]="getStatusClass(selectedCompetition.etatCompetition)">
+			  {{ selectedCompetition.etatCompetition }}
+			</span>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+	
+	<!-- Message s'il n'y a pas de compétitions -->
+	<div *ngIf="filteredCompetitions.length === 0" class="no-items">
+	  <p>Aucune compétition trouvée pour cette catégorie.</p>
+	</div>
+  </section>

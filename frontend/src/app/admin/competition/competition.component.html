@@ -1,0 +1,114 @@
+<div class="container my-4">
+  <!-- Titre du site ajouté -->
+  <div class="site-header">
+    <h1 class="site-title">Gestion des Compétitions Sportives</h1>
+    <p class="site-subtitle">ENSAJ - Plateforme de gestion des espaces sportifs</p>
+  </div>
+
+  <div class="text-end mb-3">
+    <button class="btn btn-success" (click)="toggleForm()">
+      <i class="bi bi-plus-lg me-1"></i>
+      <span>Ajouter une compétition</span>
+    </button>
+  </div>
+
+  <div *ngIf="showForm" class="form-container mb-5 position-relative">
+    <!-- Icône de fermeture séparée -->
+    <button class="form-close-btn" (click)="toggleForm()" aria-label="Fermer">
+      <i class="bi bi-x-lg"></i>
+    </button>
+    
+    <h4 class="mb-3">{{ editMode ? 'Modifier' : 'Ajouter' }} une compétition</h4>
+    
+    <form [formGroup]="competitionForm" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Nom</label>
+          <input formControlName="nom" class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Type de sport</label>
+          <select formControlName="typedesport" class="form-select">
+            <option *ngFor="let sport of typeDeSportList" [value]="sport">{{ sport }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Catégorie</label>
+          <select formControlName="categorieCompetition" class="form-select">
+            <option *ngFor="let cat of categorieList" [value]="cat">{{ cat }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Statut</label>
+          <select formControlName="etatCompetition" class="form-select">
+            <option *ngFor="let statut of statutList" [value]="statut">{{ statut }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Date début</label>
+          <input formControlName="dateDebut" type="date" class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Date fin</label>
+          <input formControlName="dateFin" type="date" class="form-control" />
+        </div>
+
+        <div class="form-group full-width">
+          <label class="form-label">Description</label>
+          <textarea formControlName="description" rows="3" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group full-width">
+          <label class="form-label">Image</label>
+          <input type="file" class="form-control" (change)="onFileSelected($event)" />
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary me-2" [disabled]="competitionForm.invalid">
+            {{ editMode ? 'Mettre à jour' : 'Ajouter' }}
+          </button>
+          <!--button type="button" class="btn btn-secondary" (click)="resetForm()">Annuler</button-->
+        </div>
+      </div>
+    </form>
+  </div>
+  
+    <!-- 📦 Cartes des compétitions -->
+    <div class="row g-4">
+      <div class="col-md-4" *ngFor="let comp of competitions">
+        <div class="card h-100 shadow-sm">
+          <img *ngIf="comp.imageURL" [src]="comp.imageURL" class="card-img-top" alt="Image compétition" />
+          <div class="card-body">
+            <h5 class="card-title">{{ comp.nom }}</h5>
+            <p class="card-text">{{ comp.description }}</p>
+            <ul class="list-unstyled small">
+              <li><strong>Type :</strong> {{ comp.typedesport }}</li>
+              <li><strong>Catégorie :</strong> {{ comp.categorieCompetition }}</li>
+              <li><strong>Date :</strong> {{ comp.dateDebut | date }} - {{ comp.dateFin | date }}</li>
+              <li><strong>État :</strong> <span [ngClass]="getStatutClass(comp.etatCompetition)">
+                {{ comp.etatCompetition }}
+              </span></li>
+            </ul>
+          </div>
+          <div *ngIf="successMessage" class="alert alert-success mt-3">
+            {{ successMessage }}
+          </div>
+          <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+            {{ errorMessage }}
+          </div>
+          
+          <div class="card-footer d-flex justify-content-between">
+            <button class="btn btn-sm btn-warning" (click)="editCompetition(comp)">Modifier</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteCompetition(comp.id)">Supprimer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+  

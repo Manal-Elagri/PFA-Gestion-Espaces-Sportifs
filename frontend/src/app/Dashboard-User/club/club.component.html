@@ -1,0 +1,146 @@
+<div class="club-container">
+  <!-- Partie dashboard -->
+  <div class="dashboard">
+    <div class="stat-card">
+      <div class="stat-value">{{ totalDemandes }}</div>
+      <div class="stat-label">Demandes totales</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ totalClubsApprouves }}</div>
+      <div class="stat-label">Clubs approuvés</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ totalDemandes - totalClubsApprouves }}</div>
+      <div class="stat-label">En attente/Refusées</div>
+    </div>
+  </div>
+
+  <!-- Message d'erreur global -->
+  <div class="error-container" *ngIf="errorMessage">
+    <div class="error-message">{{ errorMessage }}</div>
+  </div>
+
+  <!-- Liste des demandes en mode paysage -->
+  <div class="demandes-section">
+    <h2>Mes demandes</h2>
+    <div *ngIf="isLoading" class="loading">Chargement en cours...</div>
+    
+    <div *ngIf="!isLoading && demandes.length === 0" class="no-data">
+      Vous n'avez pas encore créé de demande de club.
+    </div>
+    
+    <div class="demandes-list-landscape" *ngIf="!isLoading && demandes.length > 0">
+      <div class="demande-card-landscape" *ngFor="let demande of demandes">
+        <div class="demande-logo" *ngIf="demande.imageURL">
+          <img [src]="demande.imageURL" alt="{{ demande.nom }}">
+        </div>
+        <div class="demande-info-container">
+          <div class="demande-title">{{ demande.nom }}</div>
+          <div class="demande-details-row">
+            <div class="demande-info">
+              <span class="info-label">Établissement:</span> {{ demande.etablissement }}
+            </div>
+            <div class="demande-info">
+              <span class="info-label">Date:</span> {{ demande.dateCreation | date:'dd/MM/yyyy' }}
+            </div>
+          </div>
+          <div class="demande-info" *ngIf="demande.commentaireAdmin">
+            <span class="info-label">Commentaire:</span> {{ demande.commentaireAdmin }}
+          </div>
+        </div>
+        <div class="demande-status-container">
+          <div class="demande-status" [ngClass]="getStatusClass(demande.etat)">
+            {{ getStatusText(demande.etat) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section des clubs approuvés -->
+  <div class="clubs-section">
+    <h2>Mes clubs</h2>
+    <div *ngIf="isLoading" class="loading">Chargement en cours...</div>
+    
+    <div *ngIf="!isLoading && getApprovedDemandes().length === 0" class="no-data">
+      Vous n'avez pas encore de clubs approuvés.
+    </div>
+    
+    <div class="clubs-list-landscape" *ngIf="!isLoading && getApprovedDemandes().length > 0">
+      <div class="club-card-landscape" *ngFor="let demande of getApprovedDemandes()">
+        <div class="club-logo" *ngIf="demande.imageURL">
+          <img [src]="demande.imageURL" alt="{{ demande.nom }}">
+        </div>
+        <div class="club-info-container">
+          <h3>{{ demande.nom }}</h3>
+          <div class="club-details-row">
+            <p><span class="info-label">Établissement:</span> {{ demande.etablissement }}</p>
+            <p><span class="info-label">Date de création:</span> {{ demande.dateTraitement | date:'dd/MM/yyyy' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bouton pour créer un nouveau club (déplacé en bas) -->
+  <div class="create-club-section">
+    <div class="create-club-message">
+      Passez votre demande pour créer votre club sportif et rejoignez notre communauté !
+    </div>
+    <div class="action-container">
+      <button class="create-btn" (click)="toggleForm()">
+        {{ isFormVisible ? 'Annuler' : 'Créer votre club' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Formulaire de création (affiché conditionnellement) -->
+  <div class="form-container" *ngIf="isFormVisible">
+    <h2>Créer une demande de club</h2>
+    <form [formGroup]="clubForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="nom">Nom du club</label>
+        <input 
+          type="text" 
+          id="nom" 
+          formControlName="nom" 
+          placeholder="Nom du club"
+          [ngClass]="{'invalid-input': formSubmitted && clubForm.get('nom')?.invalid}"
+        >
+        <div class="error-message" *ngIf="formSubmitted && clubForm.get('nom')?.invalid">
+          Le nom du club est obligatoire
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="etablissement">Établissement</label>
+        <input 
+          type="text" 
+          id="etablissement" 
+          formControlName="etablissement" 
+          placeholder="Nom de l'établissement"
+          [ngClass]="{'invalid-input': formSubmitted && clubForm.get('etablissement')?.invalid}"
+        >
+        <div class="error-message" *ngIf="formSubmitted && clubForm.get('etablissement')?.invalid">
+          L'établissement est obligatoire
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="form-group full-width">
+          <label class="form-label">Logo du club</label>
+          <input type="file" class="form-control" (change)="onFileSelected($event)" />
+          <div class="error-message" *ngIf="formSubmitted && !selectedFile">
+            L'image est obligatoire
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="submit-btn" [disabled]="isLoading">
+          {{ isLoading ? 'Création en cours...' : 'Soumettre la demande' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

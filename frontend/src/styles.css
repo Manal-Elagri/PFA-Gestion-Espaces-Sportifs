@@ -1,0 +1,344 @@
+@import url("https://fonts.googleapis.com/css2?family=Halant&family=Poppins:wght@900&display=swap");
+@import "src/app/styles/reset.css";
+@import "src/app/styles/responsive.css";
+
+/* -------------------------------------------------------
+                     GLOBAL
+-------------------------------------------------------- */
+
+@-webkit-keyframes load {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes load {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+#preload {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 2000;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.result .error {
+	color: #f00;
+}
+
+#preload img {
+	display: block;
+	width: 40px;
+	height: auto;
+	-webkit-animation-name: load;
+	animation-name: load;
+	-webkit-animation-duration: 1s;
+	animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+}
+
+
+body {
+	font-family: "Halant", serif;
+	font-weight: 400;
+	line-height: 1.5;
+	font-size: 18px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: "Poppins", sans-serif;
+	text-transform: uppercase;
+	line-height: 1.2;
+	font-weight: bold;
+}
+
+/*button {
+	outline: none;
+	border: none;
+	
+}*/
+
+.btn {
+	display: inline-block;
+	color: #000;
+	text-transform: uppercase;
+	font-weight: bold;
+	text-decoration: none;
+	padding: 8px 16px;
+	border-radius: 3px;
+	letter-spacing: 3px;
+}
+
+#scroll-top {
+	position: fixed;
+	bottom: 50px;
+	right: 50px;
+	z-index: 100;
+	font-family: "FontAwesome" !important;
+}
+
+.flex-row {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+}
+
+.wrapper {
+	max-width: 1200px;
+	width: 100%;
+	margin: 0 auto;
+	padding: 0 10px;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.title-center {
+	text-align: center;
+	width: 100%;
+	margin: 0 auto;
+	padding: 0 10px;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	margin-bottom: 50px;
+}
+
+#openmenu,
+#closemenu {
+	display: inline-block;
+	text-decoration: none;
+	font-size: 30px;
+	display: none;
+}
+
+.btn,
+.phone,
+.footer-social li a,
+.wrapp-input-group.flex-row > div input,
+.wrapper.flex-row.gallery-item a img,
+.menu-item.flex-row .single-menu-item a img,
+.wrapper.flex-row.wrapp-menu .list-menu li a,
+.about-chefs .chef-social li a,
+.wrapper.flex-row .about-img > a,
+.carousel-special-dishes .item img{
+	-webkit-transition: all;
+	-o-transition: all;
+	transition: all;
+	-webkit-transition-duration: 0.5s;
+	-o-transition-duration: 0.5s;
+	transition-duration: 0.5s;
+}
+
+
+.special-dishes-content .price,
+#about-us .advantage.flex-row > div p,
+.wrapper.flex-row .chefs-item .about-chefs h3,
+.wrapper.flex-row.wrapp-menu .list-menu li a,
+.single-menu-item-content .price,
+.wrapp-input-group.flex-row > div label,
+.phone,
+.btn {
+	font-family: "Poppins", sans-serif;
+}
+
+.menu li a,
+.wrapper.home-content h1,
+.wrapper.home-content > div p,
+.special-dishes-content h3,
+.owl-nav .owl-prev .fas,
+.owl-nav .owl-next .fas,
+.wrapper.flex-row .about-img > a:hover,
+#special-dishes .title-center h2,
+.wrapper.flex-row .about-content h2,
+#about-us .advantage.flex-row > div p,
+#offer h2,
+#chefs .title-center h2,
+.wrapper.flex-row .chefs-item .about-chefs h3,
+#menu .title-center h2,
+.wrapper.flex-row.wrapp-menu .list-menu li a:hover,
+.wrapper.flex-row.wrapp-menu .list-menu li a.active,
+.single-menu-item-content h3,
+#gallery .title-center h2,
+#booking-table .title-center h2,
+.working-hours h3,
+.wrapp-input-group.flex-row > div input,
+.flex-row.table-hours p,
+#contacts .title-center h2,
+.flex-row.wrapp-contacts > div h3,
+.flex-row.wrapp-contacts > div p,
+.result .send,
+.btn:hover,
+#openmenu,
+#closemenu {
+	color: #000000;
+}
+
+#openmenu:hover,
+#closemenu:hover,
+.menu li a:hover,
+.special-dishes-content .price,
+.about-chefs .chef-social li a,
+.single-menu-item-content .price,
+.wrapp-input-group.flex-row > div label,
+.footer-social li a,
+.flex-row.wrapp-contacts > div h3 i,
+.phone {
+	color: #ffcc33ff;
+}
+
+.copyright a,
+.special-dishes-content p,
+#chefs .title-center p,
+.wrapper.flex-row .about-content p,
+#special-dishes .title-center p,
+.wrapper.flex-row .chefs-item .about-chefs p,
+.about-chefs .chef-social li a:hover,
+.single-menu-item-content p,
+.working-hours p,
+.copyright,
+.phone:hover,
+.footer-social li a:hover {
+	color: #181717;
+}
+
+.wrapp-input-group.flex-row > div input::placeholder,
+.wrapp-input-group.flex-row > div input::-webkit-input-placeholder,
+.wrapp-input-group.flex-row > div input::-moz-placeholder,
+.wrapp-input-group.flex-row > div input:-ms-input-placeholder,
+.wrapp-input-group.flex-row > div input::-ms-input-placeholder {
+	color: #181717;
+}
+
+.wrapper.flex-row .about-img > a:hover,
+.btn:hover,
+.wrapper.flex-row.wrapp-menu .list-menu li a:hover,
+.wrapper.flex-row.wrapp-menu .list-menu li a.active {
+	background-color: #181717;
+}
+
+#header.bg-fixed-menu,
+#preload,
+.wrapp-input-group.flex-row > div input,
+.working-hours,
+#menu,
+#terrain,
+#gallery,
+#special-dishes {
+	background-color: #709beb8f;
+}
+
+.btn,
+.wrapper.flex-row.wrapp-menu .list-menu li a,
+.wrapper.flex-row .about-img > a {
+	background-color: #ffcc33;
+}
+
+#header,
+#home,
+#special-dishes,
+#about-us,
+#offer,
+#chefs,
+#menu,
+#gallery,
+#booking-table,
+#contacts {
+	max-width: 1920px;
+	width: 100%;
+	margin: 0 auto;
+	scroll-margin-top: 80px;
+}
+
+#special-dishes,
+#booking-table,
+#gallery,
+#menu,
+#chefs,
+#offer,
+#about-us {
+	padding: 50px 0px;
+}
+
+#home {
+	background-image: url("./assets/background/back7.jpg");
+}
+
+#booking-table,
+#menu,
+#about-us {
+	/*background-image: url("./assets/images/bg-about.jpg");*/
+	background-repeat: repeat;
+}
+
+
+
+
+	
+  
+	#home {
+	  height: 50vh; 
+	}
+  
+
+#contacts .title-center h2,
+#booking-table .title-center h2,
+#chefs .title-center h2 {
+	margin-bottom: 20px;
+	position: relative;
+	padding-bottom: 20px;
+	background-repeat: no-repeat;
+	background-position: left center;
+	background-size: 80px;
+}
+
+
+  
+
+
+
+#special-dishes .title-center h2{
+	margin-bottom: 20px;
+	position: relative;
+	padding-bottom: 20px;
+	background-image: url("./assets/images/event-sp.png");
+	background-repeat: no-repeat;
+	background-position: left center;
+	background-size: 80px;
+}

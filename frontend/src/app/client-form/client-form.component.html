@@ -1,0 +1,51 @@
+<div class="client-form-container">
+  
+
+  <!-- Form Section -->
+  <div class="form-section">
+    <h1>{{ isLogin ? 'Welcome Back' : 'Create Account' }}</h1>
+    
+    <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+      <!-- Email Field -->
+      <div class="form-group" style="--i:0">
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="email" required />
+      </div>
+      
+      <!-- Password Field -->
+      <div class="form-group" style="--i:1">
+        <label for="password">Password</label>
+        <input id="password" type="password" formControlName="password" />
+      </div>
+      
+      <!-- Additional Fields for Registration -->
+      <div *ngIf="!isLogin">
+        <div class="form-group" style="--i:2">
+          <label for="nom">Full Name</label>
+          <input id="nom" type="text" formControlName="nom" required />
+        </div>
+        <div class="form-group" style="--i:3">
+          <label for="adresse">Address</label>
+          <input id="adresse" type="text" formControlName="adresse" />
+        </div>
+        <div class="form-group" style="--i:4">
+          <label for="numTelephone">Phone</label>
+          <input id="numTelephone" type="tel" formControlName="numTelephone" />
+        </div>
+      </div>
+      
+      <button type="submit" class="btn">
+        {{ isLogin ? 'Sign In' : 'Create Account' }}
+      </button>
+      <button type="button" class="btn switch-btn" (click)="toggleForm()">
+        {{ isLogin ? "Don't have an account?" : 'Already have an account?' }}
+      </button>
+    </form>
+  </div>
+
+  <!-- Image Section -->
+  <div class="image-section">
+    <h2 class="welcome-title">Hello, friend!</h2>
+    <img src='../../assets/s-1.gif' alt="Welcome" />
+  </div>
+</div>

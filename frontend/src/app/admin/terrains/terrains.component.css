@@ -1,0 +1,278 @@
+/* Variables pour les couleurs et les ombres */
+:root {
+  --primary-color: #3f51b5;
+  --primary-dark: #303f9f;
+  --primary-light: #c5cae9;
+  --accent-color: #ff4081;
+  --success-color: #4caf50;
+  --warning-color: #ff9800;
+  --danger-color: #f44336;
+  --light-gray: #f8f9fa;
+  --dark-gray: #343a40;
+  --text-color: #212529;
+  --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --hover-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  --transition-speed: 0.3s;
+}
+
+/* Styles globaux */
+body {
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-color);
+  background-color: var(--light-gray);
+}
+
+.container {
+  max-width: 1200px;
+  padding: 0 20px;
+}
+
+/* En-tête du site */
+.site-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--primary-light);
+}
+
+.site-title {
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.site-subtitle {
+  color: var(--dark-gray);
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+
+/* Bouton d'ajout */
+.btn-success {
+  background-color: var(--success-color);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-weight: 500;
+  border-radius: 50px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all var(--transition-speed);
+}
+
+.btn-success:hover {
+  background-color: #43a047;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Formulaire */
+.form-container {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow: var(--card-shadow);
+  position: relative;
+  margin-bottom: 3rem;
+  border-top: 4px solid var(--primary-color);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.form-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border: none;
+  background: rgba(0, 0, 0, 0.05);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+}
+
+.form-close-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transform: rotate(90deg);
+}
+
+/* Formulaire - Inputs */
+.form-control, .form-select {
+  padding: 0.7rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: all var(--transition-speed);
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.form-label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--dark-gray);
+}
+
+/* Boutons du formulaire */
+/* Style amélioré pour le bouton submit du formulaire (Ajouter/Mettre à jour) */
+.form-actions .btn-primary {
+  background-color: #3f51b5; /* Bleu indigo */
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  transition: all 0.3s ease;
+}
+
+/* Effet de survol */
+.form-actions .btn-primary:hover {
+  background-color: #303f9f; /* Bleu plus foncé */
+  box-shadow: 0 6px 12px rgb(0, 0, 0);
+  transform: translateY(-2px);
+}
+
+/* Effet au clic */
+.form-actions .btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Bouton désactivé */
+.form-actions .btn-primary:disabled {
+  background-color: #1f92cc; /* Gris clair */
+  box-shadow: none;
+  transform: none;
+  cursor: not-allowed;
+}
+
+/* Cartes des terrains */
+.card {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all var(--transition-speed);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--hover-shadow);
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-title {
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.card-footer {
+  background-color: white;
+  border-top: 1px solid #eee;
+  padding: 1rem 1.5rem;
+}
+
+/* Statut des terrains */
+.text-success {
+  color: var(--success-color) !important;
+  font-weight: 500;
+}
+
+.text-danger {
+  color: var(--danger-color) !important;
+  font-weight: 500;
+}
+
+/* Boutons des cartes */
+.btn-warning {
+  background-color: var(--warning-color);
+  border: none;
+  color: rgb(0, 0, 0);
+  transition: all var(--transition-speed);
+}
+
+.btn-warning:hover {
+  background-color: #fb8c00;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.btn-danger {
+  background-color: var(--danger-color);
+  border: none;
+  transition: all var(--transition-speed);
+}
+
+.btn-danger:hover {
+  background-color: #e53935;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Messages de succès et d'erreur */
+.alert {
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin: 0 1.5rem;
+}
+
+/* Responsive - Ajustements pour petits écrans */
+@media (max-width: 768px) {
+  .site-title {
+    font-size: 2rem;
+  }
+  
+  .form-container {
+    padding: 1.5rem;
+  }
+  
+  .card-img-top {
+    height: 160px;
+  }
+}

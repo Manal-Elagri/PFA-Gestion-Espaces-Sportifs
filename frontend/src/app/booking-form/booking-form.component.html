@@ -1,0 +1,98 @@
+<div class="wrapper flex-row wrapp-booking-form">
+	<div class="booking-form">
+		<form [formGroup]="reservationForm" (ngSubmit)="submitForm()">
+			<div class="wrapp-input-group flex-row">
+				<div>
+					<p><label for="name">Nombre Des Gents</label></p>
+					<input
+						type="text"
+						placeholder="Nombre Des Gents"
+						id="name"
+						formControlName="name"
+						required
+					/>
+				</div>
+				<div>
+					<p><label for="lastname">Nom de famille</label></p>
+					<input
+						type="text"
+						placeholder="Nom de famille"
+						id="lastname"
+						formControlName="lastname"
+					/>
+				</div>
+				<div>
+					<p><label for="phone">Téléphone</label></p>
+					<input
+						type="tel"
+						placeholder="Téléphone"
+						id="phone"
+						formControlName="phone"
+					/>
+				</div>
+				<div>
+					<p><label for="email">Email</label></p>
+					<input
+						type="email"
+						placeholder="Email"
+						id="email"
+						formControlName="email"
+					/>
+				</div>
+				<div>
+					<p><label for="date">Date</label></p>
+					<input
+						type="text"
+						placeholder="dd-mm-aa"
+						id="date"
+						formControlName="date"
+					/>
+				</div>
+				<div>
+					<p><label for="time">Heure</label></p>
+					<input
+						type="text"
+						placeholder="12:00 AM"
+						id="time"
+						formControlName="time"
+					/>
+				</div>
+				<button type="submit" id="send" class="btn">Réservez en ligne</button>
+			</div>
+			<p
+				class="result mt-2"
+				[style.display]="displayResultMessage ? 'block' : 'none'"
+			>
+				<span
+					[ngClass]="{
+						error: resultMessage === 'Remplissez tous les champs, s il vous plaît.',
+						send:
+							resultMessage ===
+							'Merci pour la réservation. Nous vous contacterons bientôt.'
+					}"
+				>
+					{{ resultMessage }}
+				</span>
+			</p>
+		</form>
+	</div>
+	<div class="working-hours">
+		<h3>Horaires d'ouverture</h3>
+		<p>
+			Viens nous rejoindre dans notre espace accueillant. Expérimente notre
+			passion culinaire et notre ambiance exceptionnelle. Nous espérons te voir bientôt !
+		</p>
+		<div class="flex-row table-hours">
+			<p>Lundi - Vendredi</p>
+			<p>8h - 18h</p>
+		</div>
+		<div class="flex-row table-hours">
+			<p>Samedis</p>
+			<p>9h - 17h</p>
+		</div>
+		<div class="flex-row table-hours">
+			<p>Dimanches</p>
+			<p>9h - 16h</p>
+		</div>
+	</div>
+</div>

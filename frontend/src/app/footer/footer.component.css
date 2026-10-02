@@ -1,0 +1,110 @@
+#contacts {
+	background-color: #0d1b2a;
+	color: #e0e0e0;
+	padding: 60px 20px 30px;
+	font-family: 'Segoe UI', sans-serif;
+}
+
+#contacts .title-center h2 {
+	text-align: center;
+	font-size: 32px;
+	margin-bottom: 20px;
+	color: #ffcc33;
+}
+
+#contacts p {
+	color: #cccccc;
+	font-size: 15px;
+	line-height: 1.6;
+}
+
+#contacts .wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 30px;
+	margin-top: 40px;
+}
+
+#contacts .wrapper > div {
+	background-color: #1b263b;
+	border-radius: 12px;
+	padding: 25px;
+	width: 260px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+	transition: transform 0.3s ease;
+}
+
+#contacts .wrapper > div:hover {
+	transform: translateY(-5px);
+}
+
+#contacts h3 {
+	font-size: 18px;
+	margin-bottom: 10px;
+	color: #ffcc33;
+	display: flex;
+	align-items: center;
+}
+
+#contacts h3 i {
+	margin-right: 10px;
+	font-size: 20px;
+	color: #ffcc33;
+}
+
+#contacts h4 {
+	margin-top: 15px;
+	margin-bottom: 5px;
+	font-size: 15px;
+	color: #ffffff;
+}
+
+.phone,
+#contacts a {
+	color: #e0e0e0;
+	text-decoration: none;
+	transition: color 0.3s ease;
+}
+
+#contacts a:hover {
+	color: #ffcc33;
+}
+
+.footer-social {
+	display: flex;
+	gap: 15px;
+	margin-top: 10px;
+}
+
+.footer-social i {
+	font-size: 20px;
+	color: #e0e0e0;
+	transition: color 0.3s ease;
+}
+
+.footer-social i:hover {
+	color: #ffcc33;
+}
+
+#contacts .copyright {
+	text-align: center;
+	margin-top: 40px;
+	color: #999;
+	font-size: 13px;
+}
+
+#contacts .useful-links {
+	text-align: center;
+	margin-top: 40px;
+}
+
+#contacts .useful-links a {
+	margin: 0 10px;
+	color: #cccccc;
+	font-size: 14px;
+}
+
+#contacts .useful-links a:hover {
+	color: #ffcc33;
+}

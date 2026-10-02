@@ -1,0 +1,180 @@
+@media all and (min-width: 993px) {
+	.wrapper.home-content > div {
+		width: 50%;
+	}
+	.wrapper.home-content h1 {
+		font-size: 80px;
+	}
+	.title-center {
+		max-width: 650px;
+	}
+	#special-dishes .title-center h2,
+	.wrapper.flex-row .about-content h2,
+	#offer h2,
+	#chefs .title-center h2,
+	#menu .title-center h2,
+	#gallery .title-center h2,
+	#booking-table .title-center h2,
+	#contacts .title-center h2 {
+		font-size: 40px;
+	}
+	.wrapper.flex-row .about-img {
+		width: 40%;
+		position: relative;
+	}
+	.wrapper.flex-row .about-content {
+		width: 60%;
+	}
+	.wrapper.flex-row .chefs-item {
+		width: calc(25% - 20px);
+		margin-bottom: 20px;
+	}
+	.wrapper.flex-row.gallery-item a {
+		display: block;
+		width: 33.333333%;
+	}
+	.menu-item.flex-row .single-menu-item {
+		width: calc(25% - 20px);
+		margin-bottom: 40px;
+	}
+	.booking-form {
+		width: 60%;
+	}
+	.working-hours {
+		width: 40%;
+	}
+	.working-hours h3 {
+		font-size: 30px;
+	}
+	.flex-row.wrapp-contacts > div {
+		width: 25%;
+	}
+	.footer-social {
+		-webkit-box-pack: justify;
+		-ms-flex-pack: justify;
+		justify-content: space-between;
+	}
+	.wrapper.flex-row .about-content {
+		padding-left: 50px;
+		margin-bottom: 30px;
+	}
+}
+@media all and (max-width: 992px) {
+	.flex-row {
+		width: 100%;
+	}
+	.wrapper.home-content {
+		display: flex;
+		justify-content: center;
+	}
+	.wrapper.home-content h1 {
+		font-size: 80px;
+	}
+	.wrapper.home-content > div {
+		width: 100%;
+		text-align: center;
+	}
+	.title-center {
+		max-width: 992px;
+	}
+	#special-dishes .title-center h2,
+	.wrapper.flex-row .about-content h2,
+	#offer h2,
+	#chefs .title-center h2,
+	#menu .title-center h2,
+	#gallery .title-center h2,
+	#booking-table .title-center h2,
+	#contacts .title-center h2 {
+		font-size: 50px;
+	}
+	#about-us .wrapper.flex-row {
+		-webkit-box-orient: vertical;
+		-webkit-box-direction: reverse;
+		-ms-flex-direction: column-reverse;
+		flex-direction: column-reverse;
+	}
+	.wrapper.flex-row .about-img {
+		width: 100%;
+		position: relative;
+		order: 2;
+	}
+	.wrapper.flex-row .about-content {
+		width: 100%;
+		order: 1;
+	}
+
+	.wrapper.flex-row .chefs-item,
+	.menu-item.flex-row .single-menu-item {
+		width: calc(50% - 20px);
+		margin-bottom: 30px;
+	}
+
+	.wrapper.flex-row.gallery-item a {
+		width: 50%;
+	}
+
+	.booking-form {
+		padding-right: 0px;
+		margin-bottom: 30px;
+	}
+
+	.working-hours,
+	.booking-form,
+	.wrapper.flex-row .about-content,
+	.wrapper.flex-row .about-img {
+		width: 100%;
+	}
+
+	.flex-row.wrapp-contacts > div {
+		width: 50%;
+	}
+
+	.footer-social {
+		-webkit-box-pack: start;
+		-ms-flex-pack: start;
+		justify-content: flex-start;
+	}
+
+	.footer-social li {
+		margin-right: 30px;
+	}
+
+	.wrapper.flex-row .about-content {
+		padding-left: 0px;
+		margin-bottom: 30px;
+	}
+}
+
+@media all and (max-width: 600px) {
+	.wrapper.home-content h1 {
+		font-size: 50px;
+	}
+
+	#special-dishes .title-center h2,
+	.wrapper.flex-row .about-content h2,
+	#offer h2,
+	#chefs .title-center h2,
+	#menu .title-center h2,
+	#gallery .title-center h2,
+	#booking-table .title-center h2,
+	#contacts .title-center h2 {
+		font-size: 30px;
+	}
+
+	.working-hours h3 {
+		font-size: 25px;
+	}
+
+	.advantage.flex-row > div,
+	.wrapper.flex-row .chefs-item,
+	.menu-item.flex-row .single-menu-item,
+	.wrapper.flex-row.gallery-item a,
+	.wrapp-input-group.flex-row > div,
+	.flex-row.wrapp-contacts > div {
+		width: 100% !important;
+	}
+
+	.menu-item.flex-row .single-menu-item {
+		margin-right: 0px !important;
+	}
+}

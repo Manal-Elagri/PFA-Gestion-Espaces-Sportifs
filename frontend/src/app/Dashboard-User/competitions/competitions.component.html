@@ -1,0 +1,129 @@
+<div class="dashboard-content-container">
+  <!-- Message d'erreur -->
+  <div *ngIf="error" class="alert-message error-message">
+    <div class="alert-content">
+      <i class="icon-warning"></i>
+      <span>{{ error }}</span>
+    </div>
+    <button type="button" class="btn-close" (click)="error = null" aria-label="Fermer">
+      <i class="icon-close"></i>
+    </button>
+  </div>
+
+  <div class="dashboard-section">
+    <h1 class="dashboard-title">Gestion des Compétitions</h1>
+
+    <!-- Sélection de club -->
+    <div class="dashboard-form-container">
+      <div class="form-group">
+        <label for="clubSelect" class="form-label">Sélectionnez un club :</label>
+        <div class="select-wrapper">
+          <select id="clubSelect" class="dashboard-select" (change)="onClubChange($event)" [disabled]="loading">
+            <option disabled [selected]="!selectedClubId">-- Choisir un club --</option>
+            <option *ngFor="let club of mesClubs" [value]="club.id" [selected]="selectedClubId === club.id">
+              {{ club.nom }}
+            </option>
+          </select>
+          <div class="select-arrow"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading indicator -->
+    <div *ngIf="loading" class="loading-container">
+      <div class="spinner"></div>
+      <p>Chargement en cours...</p>
+    </div>
+
+    <!-- Statistiques -->
+    <div class="dashboard-stats-row" *ngIf="selectedClubId && !loading">
+      <div class="dashboard-stat-card pending-card">
+        <div class="stat-header">Demandes de Participation</div>
+        <div class="stat-value">{{ statistiques.inscrits }}</div>
+      </div>
+      <div class="dashboard-stat-card confirmed-card">
+        <div class="stat-header">Participations Validées</div>
+        <div class="stat-value">{{ statistiques.valides }}</div>
+      </div>
+      <div class="dashboard-stat-card cancelled-card">
+        <div class="stat-header">Participations Éliminées</div>
+        <div class="stat-value">{{ statistiques.elimines }}</div>
+      </div>
+    </div>
+
+    <!-- Sections des compétitions -->
+    <div class="dashboard-grid" *ngIf="!loading">
+      <!-- Liste des compétitions à venir (côté gauche) -->
+      <div class="dashboard-grid-column main-column">
+        <div class="dashboard-card">
+          <div class="dashboard-card-header">
+            <h2 class="dashboard-subtitle">Compétitions à venir</h2>
+          </div>
+          <div class="dashboard-card-body">
+            <div *ngIf="competitions.length === 0" class="empty-state">
+              <i class="icon-info"></i>
+              <p>Aucune compétition disponible pour le moment.</p>
+            </div>
+
+            <div *ngFor="let competition of competitions" class="competition-item">
+              <div class="competition-header">
+                <h3 class="competition-title">{{ competition.nom }}</h3>
+                <div *ngIf="isParticipant(competition.id)" class="status-badge" 
+                     [ngClass]="getStatusClass(getStatutParticipation(competition.id))">
+                  {{ getStatusText(getStatutParticipation(competition.id)) }}
+                </div>
+              </div>
+              <p class="competition-description">{{ competition.description }}</p>
+              <div class="competition-footer">
+                <div class="competition-date">
+                  <i class="icon-calendar"></i>
+                  <span>Du {{ competition.dateDebut | date:'dd/MM/yyyy' }} au {{ competition.dateFin | date:'dd/MM/yyyy' }}</span>
+                </div>
+                <button 
+                  *ngIf="!isParticipant(competition.id) && selectedClubId" 
+                  class="btn-primary" 
+                  (click)="rejoindreCompetition(competition.id)">
+                  <i class="icon-plus"></i> Rejoindre
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Liste des participations actuelles (côté droit) -->
+      <div class="dashboard-grid-column side-column">
+        <div class="dashboard-card">
+          <div class="dashboard-card-header">
+            <h2 class="dashboard-subtitle">Vos participations</h2>
+          </div>
+          <div class="dashboard-card-body">
+            <div *ngIf="participations.length === 0" class="empty-state">
+              <i class="icon-info"></i>
+              <p>Vous n'avez pas encore rejoint de compétition.</p>
+              <p class="hint-text" *ngIf="selectedClubId">Sélectionnez "Rejoindre" sur une compétition pour participer.</p>
+            </div>
+
+            <div *ngFor="let participation of participations" class="participation-item">
+              <div class="participation-header">
+                <h3 class="participation-title">{{ participation.competition.nom }}</h3>
+                <div class="status-badge" [ngClass]="getStatusClass(participation.statutParticipation)">
+                  {{ getStatusText(participation.statutParticipation) }}
+                </div>
+              </div>
+              <div class="participation-date">
+                <i class="icon-calendar"></i>
+                <span>Du {{ participation.competition.dateDebut | date:'dd/MM/yyyy' }} au {{ participation.competition.dateFin | date:'dd/MM/yyyy' }}</span>
+              </div>
+              <div class="participation-actions" *ngIf="canCancelParticipation(participation.competition.id)">
+                <button class="btn-cancel" (click)="annulerParticipation(participation.competition.id)">
+                  <i class="icon-cancel"></i> Annuler
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

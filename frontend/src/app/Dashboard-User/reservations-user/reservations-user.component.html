@@ -1,0 +1,201 @@
+<div class="dashboard-content-container">
+  <div class="dashboard-section">
+    <h1 class="dashboard-title">Gestion des Réservations</h1>
+    
+    <!-- Statistiques -->
+    <div class="dashboard-stats-row">
+      <div class="dashboard-stat-card">
+        <div class="stat-value">{{getTotalReservations()}}</div>
+        <div class="stat-label">Total</div>
+      </div>
+      <div class="dashboard-stat-card pending-card">
+        <div class="stat-value">{{getReservationsByStatus(etatReservationTerrain.EN_ATTENTE)}}</div>
+        <div class="stat-label">En Attente</div>
+      </div>
+      <div class="dashboard-stat-card confirmed-card">
+        <div class="stat-value">{{getReservationsByStatus(etatReservationTerrain.VALIDEE)}}</div>
+        <div class="stat-label">Validées</div>
+      </div>
+      <div class="dashboard-stat-card cancelled-card">
+        <div class="stat-value">{{getReservationsByStatus(etatReservationTerrain.REFUSEE)}}</div>
+        <div class="stat-label">Refusées</div>
+      </div>
+    </div>
+  
+    <!-- Formulaire de réservation -->
+    <div class="dashboard-form-container">
+      <h2 class="dashboard-subtitle">Nouvelle Réservation</h2>
+      <div class="dashboard-form">
+        <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="equipeSelect">Sélectionner une équipe*</label>
+              <div class="select-wrapper">
+                <select id="equipeSelect" formControlName="equipeId" class="dashboard-select">
+                  <option value="" disabled selected>Choisir une équipe</option>
+                  <option *ngFor="let equipe of mesEquipes" [value]="equipe.id">
+                    {{equipe.nom_equipe}} ({{equipe.nbr_joueurs}} joueurs)
+                  </option>
+                </select>
+                <div class="select-arrow"></div>
+              </div>
+              <div *ngIf="reservationForm.get('equipeId')?.hasError('required') && reservationForm.get('equipeId')?.touched" class="error-message">
+                Veuillez sélectionner une équipe
+              </div>
+            </div>
+    
+            <div class="form-group">
+              <label for="terrainSelect">Sélectionner un terrain*</label>
+              <div class="select-wrapper">
+                <select id="terrainSelect" formControlName="terrainId" class="dashboard-select" (change)="onTerrainSelected(); verifierDisponibiliteTerrain()">
+                  <option value="" disabled selected>Choisir un terrain</option>
+                  <option *ngFor="let terrain of terrainsDisponibles" [value]="terrain.id">
+                    {{terrain.nom}} ({{terrain.categorieTerrain}})
+                  </option>
+                </select>
+                <div class="select-arrow"></div>
+              </div>
+              <div *ngIf="reservationForm.get('terrainId')?.hasError('required') && reservationForm.get('terrainId')?.touched" class="error-message">
+                Veuillez sélectionner un terrain
+              </div>
+            </div>
+
+          </div>
+              <!-- Débogage et calendrier -->
+  <div *ngIf="selectedTerrain">
+    <p>Terrain sélectionné: {{ selectedTerrain.nom }}</p>
+  </div>
+  <div *ngIf="!selectedTerrain">
+    <p>Aucun terrain sélectionné</p>
+  </div>
+  
+  <!-- Dans votre template HTML -->
+<div class="form-group" *ngIf="selectedTerrain">
+  <label>Sélectionnez une date sur le calendrier</label>
+  
+  <div class="simple-calendar">
+    <div class="calendar-header">
+      <button (click)="changeMonth(-1)" class="calendar-nav-btn">
+        <i class="material-icons">chevron_left</i>
+      </button>
+      <h3>{{ currentMonth | date:'MMMM yyyy' }}</h3>
+      <button (click)="changeMonth(1)" class="calendar-nav-btn">
+        <i class="material-icons">chevron_right</i>
+      </button>
+    </div>
+    
+    <div class="calendar-weekdays">
+      <div class="weekday">Dim</div>
+      <div class="weekday">Lun</div>
+      <div class="weekday">Mar</div>
+      <div class="weekday">Mer</div>
+      <div class="weekday">Jeu</div>
+      <div class="weekday">Ven</div>
+      <div class="weekday">Sam</div>
+    </div>
+    
+    <div class="calendar-days">
+      <div 
+        *ngFor="let day of calendarDays" 
+        class="calendar-day"
+        [class.available]="isDateAvailable(day)"
+        [class.unavailable]="!isDateAvailable(day)"
+        [class.selected]="isDateSelected(day)"
+        [class.other-month]="day.getMonth() !== currentMonth.getMonth()"
+        (click)="isDateAvailable(day) && selectDate(day)"
+      >
+        {{ day.getDate() }}
+      </div>
+    </div>
+  </div>
+</div>
+    
+          <div class="form-actions">
+            <button type="submit" class="btn-primary" [disabled]="reservationForm.invalid || isLoading">
+              <i class="icon-add"></i> Réserver
+            </button>
+            <button type="reset" class="btn-secondary" [disabled]="isLoading">
+              <i class="icon-refresh"></i> Réinitialiser
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+ <!-- Section MES RÉSERVATIONS modifiée pour Angular -->
+<div class="dashboard-reservations">
+  <div class="reservations-header">
+    <h2 class="dashboard-subtitle">MES RÉSERVATIONS</h2>
+  </div>
+  
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Chargement des données...</p>
+  </div>
+
+  <div *ngIf="!isLoading && mesReservations.length === 0" class="empty-state">
+    <div class="empty-state-icon">⚠️</div>
+    <p>Aucune réservation trouvée</p>
+    <button class="empty-state-button">Créer une réservation</button>
+  </div>
+
+  <div *ngIf="!isLoading && mesReservations.length > 0" class="reservations-card-grid">
+    <div *ngFor="let reservation of mesReservations" class="reservation-card" [ngClass]="getStatusClass(reservation.etatReservation)">
+      <div class="reservation-card-status">
+        <div class="status-badge">{{reservation.etatReservation}}</div>
+      </div>
+      
+      <div class="reservation-card-header">
+        <div class="terrain-icon">
+          {{getCategorieIcon(reservation.terrain.categorieTerrain)}}
+        </div>
+        <div class="terrain-info">
+          <h3 class="terrain-name">{{reservation.terrain.nom}}</h3>
+          <p class="terrain-category">{{reservation.terrain.categorieTerrain}} {{reservation.terrain.mesure}}</p>
+        </div>
+      </div>
+      
+      <div class="reservation-card-body">
+        <div class="reservation-info-row">
+          <div class="info-icon">
+            {{getEquipeIcon()}}
+          </div>
+          <div class="info-content">
+            <span class="info-label">Équipe</span>
+            <span class="info-value">{{reservation.equipe.nom_equipe}}</span>
+            <span class="info-meta">{{reservation.equipe.nbr_joueurs}} joueurs</span>
+          </div>
+        </div>
+        
+        <div class="reservation-info-row">
+          <div class="info-icon">
+            {{getDateReservationIcon()}}
+          </div>
+          <div class="info-content">
+            <span class="info-label">Réservé le</span>
+            <span class="info-value">{{formatDate(reservation.dateReservation)}}</span>
+          </div>
+        </div>
+        
+        <div class="reservation-info-row">
+          <div class="info-icon">
+            {{getDateUtilisationIcon()}}
+          </div>
+          <div class="info-content">
+            <span class="info-label">Date d'utilisation</span>
+            <span class="info-value">{{formatCalendrierDate(reservation.calendrier)}}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="reservation-card-footer" *ngIf="peutAnnuler(reservation)">
+        <button class="btn-cancel" 
+                (click)="annulerReservation(reservation.id)" 
+                [disabled]="reservationsEnCoursAnnulation.has(reservation.id) || isLoading">
+          <span class="cancel-icon">{{getAnnulerIcon()}}</span>
+          {{ reservationsEnCoursAnnulation.has(reservation.id) ? 'Annulation...' : 'Annuler la réservation' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

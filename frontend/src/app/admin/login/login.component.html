@@ -1,0 +1,22 @@
+<div class="page-background">
+  <div class="auth-wrapper">
+    <div class="auth-image">
+      <img src="../../../assets/Login_Admin.jpg" alt="Admin Login Image" />
+    </div>
+
+    <div class="auth-container">
+      <form (ngSubmit)="login()" #loginForm="ngForm" class="auth-form">
+        <h2>Connexion Admin</h2>
+        
+        <input type="email" name="email" [(ngModel)]="loginData.email" placeholder="Email" required />
+        <input type="password" name="password" [(ngModel)]="loginData.password" placeholder="Mot de passe" required />
+        
+        <button type="submit">Se connecter</button>
+
+        <div *ngIf="errorMessage" class="alert alert-danger mt-2">{{ errorMessage }}</div>
+
+        <p class="link-text">Pas encore de compte ? <a routerLink="/admin/register">S'inscrire</a></p>
+      </form>
+    </div>
+  </div>
+</div>

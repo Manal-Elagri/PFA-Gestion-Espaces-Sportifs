@@ -1,0 +1,183 @@
+/* Container principal */
+.client-form-container {
+  display: flex;
+  width: 800px;
+  min-height: 90px;
+  background: #7070707e;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Section formulaire */
+.form-section {
+  width: 50%;
+  padding: 40px;
+  background: #1a1a1a;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-section h1 {
+  font-size: 20px;
+  margin-bottom: 30px;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Groupes de formulaire */
+.form-group {
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: slideIn 0.5s forwards;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #ffcc33;
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+}
+
+/* Animation des champs */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.form-group {
+  animation-delay: calc(var(--i) * 0.1s);
+}
+
+/* Boutons */
+.btn {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+button[type="submit"] {
+  background: #ffcc33;
+  color: #000;
+  border: none;
+  margin-top: 20px;
+}
+
+button[type="submit"]:hover {
+  background: #ffd54f;
+  transform: translateY(-2px);
+}
+
+.switch-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.switch-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Section image */
+.image-section {
+  width: 50%;
+  background: #bebebe93;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  position: relative;
+}
+
+.welcome-title {
+  font-size: 32px;
+  color: #000;
+  margin-bottom: 30px;
+  font-weight: 600;
+  z-index: 1;
+}
+
+.image-section img {
+  max-width: 80%;
+  height: auto;
+  object-fit: contain;
+  z-index: 1;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .client-form-container {
+    width: 90%;
+    max-width: 800px;
+  }
+}
+
+@media (max-width: 768px) {
+  .client-form-container {
+    flex-direction: column;
+    height: auto;
+    margin: 20px;
+    position: relative;
+    transform: none;
+    top: 0;
+    left: 0;
+    width: calc(100% - 40px);
+  }
+
+  .form-section,
+  .image-section {
+    width: 100%;
+  }
+
+  .image-section {
+    padding: 30px;
+  }
+
+  .welcome-title {
+    font-size: 24px;
+  }
+}
+
+/* Validation styles */
+.form-group input.ng-invalid.ng-touched {
+  border-color: #ff4444;
+}
+
+.form-group input.ng-valid.ng-touched {
+  border-color: #00c853;
+}

@@ -1,0 +1,294 @@
+<div class="admin-reservations-container">
+    <div class="header">
+      <h1>Gestion des Réservations</h1>
+      <div class="stats-summary">
+        <div class="stat-card">
+          <span class="stat-value">{{ dashboardStats.totalReservations || 0 }}</span>
+          <span class="stat-label">Réservations totales</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">{{ dashboardStats.reservationsEnAttente || 0 }}</span>
+          <span class="stat-label">En attente</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">{{ dashboardStats.reservationsValidees || 0 }}</span>
+          <span class="stat-label">Validées</span>
+        </div>
+        <div class="stat-card notification" *ngIf="reservationsAnciennesEnAttente.length > 0">
+          <span class="stat-value">{{ reservationsAnciennesEnAttente.length }}</span>
+          <span class="stat-label">Notifications</span>
+        </div>
+      </div>
+    </div>
+  
+    <div class="navigation-tabs">
+      <button [class.active]="activeView === 'all'" (click)="setActiveView('all')">
+        Toutes les réservations
+      </button>
+      <button [class.active]="activeView === 'pending'" (click)="setActiveView('pending')">
+        En attente
+      </button>
+      <button [class.active]="activeView === 'approved'" (click)="setActiveView('approved')">
+        Validées
+      </button>
+      <button [class.active]="activeView === 'notifications'" (click)="setActiveView('notifications')">
+        Notifications <span class="badge" *ngIf="reservationsAnciennesEnAttente.length > 0">{{ reservationsAnciennesEnAttente.length }}</span>
+      </button>
+      <button [class.active]="activeView === 'stats'" (click)="setActiveView('stats')">
+        Statistiques
+      </button>
+    </div>
+  
+    <!--div class="filters" *ngIf="activeView !== 'stats'">
+      <div class="filter-group">
+        <label>Équipe:</label>
+        <select [formControl]="equipeFilter">
+          <option value="">Toutes les équipes</option>
+          <option *ngFor="let equipe of equipes" [value]="equipe.id">{{ equipe.nom_equipe }}</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Statut:</label>
+        <select [formControl]="statusFilter">
+          <option value="">Tous les statuts</option>
+          <option value="EN_ATTENTE">En attente</option>
+          <option value="VALIDEE">Validée</option>
+          <option value="REFUSEE">Annulée</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Date:</label>
+        <input type="date" [formControl]="dateFilter">
+      </div>
+      <button class="filter-button" (click)="filterReservations()">Filtrer</button>
+      <button class="reset-button" (click)="loadAllData()">Rafraîchir</button>
+    </div---->
+  
+    <!-- Section des statistiques -->
+    <div class="stats-section" *ngIf="activeView === 'stats'">
+      <div class="stats-container">
+        <div class="chart-container">
+          <h3>Réservations par statut</h3>
+          <div class="pie-chart">
+            <ngx-charts-pie-chart
+              [results]="statusChartData"
+              [legend]="true"
+              [labels]="true"
+              [doughnut]="true">
+            </ngx-charts-pie-chart>
+          </div>
+        </div>
+        
+        <div class="chart-container">
+          <h3>Réservations par terrain</h3>
+          <div class="bar-chart">
+            <ngx-charts-bar-horizontal
+              [results]="terrainChartData"
+              [xAxis]="true"
+              [yAxis]="true"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              xAxisLabel="Nombre de réservations"
+              yAxisLabel="Terrain">
+            </ngx-charts-bar-horizontal>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Notifications -->
+    <div class="reservations-list" *ngIf="activeView === 'notifications' && reservationsAnciennesEnAttente.length > 0">
+      <div class="notification-header">
+        <h3>Réservations en attente depuis plus de 24h</h3>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Équipe</th>
+            <th>Terrain</th>
+            <th>Date de demande</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let reservation of reservationsAnciennesEnAttente" [class.selected]="selectedReservation?.id === reservation.id">
+            <td>{{ reservation.id }}</td>
+            <td>{{ reservation.equipe.nom_equipe }}</td>
+            <td>{{ reservation.terrain.nom }}</td>
+            <td>{{ formatDate(reservation.dateReservation) }}</td>
+            <td>
+              <span [class]="getStatusClass(reservation.etatReservation)">
+                {{ getStatusText(reservation.etatReservation) }}
+              </span>
+            </td>
+            <td class="actions">
+              <button class="approve-btn" (click)="changeEtatReservation(reservation, 'VALIDEE')">Valider</button>
+              <button class="cancel-btn" (click)="changeEtatReservation(reservation, 'REFUSEE')">Annuler</button>
+              <button class="detail-btn" (click)="selectReservation(reservation)">Détails</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Liste des réservations (toutes, en attente ou validées) -->
+    <div class="reservations-list" *ngIf="activeView === 'all' || activeView === 'pending' || activeView === 'approved'">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Équipe</th>
+            <th>Terrain</th>
+            <th>Date de demande</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="activeView === 'all'">
+            <tr *ngFor="let reservation of allReservations" [class.selected]="selectedReservation?.id === reservation.id">
+              <td>{{ reservation.id }}</td>
+              <td>{{ reservation.equipe.nom_equipe }}</td>
+              <td>{{ reservation.terrain.nom }}</td>
+              <td>{{ formatDate(reservation.dateReservation) }}</td>
+              <td>
+                <span [class]="getStatusClass(reservation.etatReservation)">
+                  {{ getStatusText(reservation.etatReservation) }}
+                </span>
+              </td>
+              <td class="actions">
+                <button class="approve-btn" *ngIf="reservation.etatReservation === 'EN_ATTENTE'" (click)="changeEtatReservation(reservation, 'VALIDEE')">Valider</button>
+                <button class="cancel-btn" *ngIf="reservation.etatReservation !== 'REFUSEE'" (click)="changeEtatReservation(reservation, 'REFUSEE')">Annuler</button>
+                <button class="detail-btn" (click)="selectReservation(reservation)">Détails</button>
+                <button class="equipe-btn" (click)="loadReservationsParEquipe(reservation.equipe.id)">Équipe</button>
+              </td>
+            </tr>
+          </ng-container>
+          
+          <ng-container *ngIf="activeView === 'pending'">
+            <tr *ngFor="let reservation of reservationsEnAttente" [class.selected]="selectedReservation?.id === reservation.id">
+              <td>{{ reservation.id }}</td>
+              <td>{{ reservation.equipe.nom_equipe }}</td>
+              <td>{{ reservation.terrain.nom }}</td>
+              <td>{{ formatDate(reservation.dateReservation) }}</td>
+              <td>
+                <span class="status-pending">
+                  {{ getStatusText(reservation.etatReservation) }}
+                </span>
+              </td>
+              <td class="actions">
+                <button class="approve-btn" (click)="changeEtatReservation(reservation, 'VALIDEE')">Valider</button>
+                <button class="cancel-btn" (click)="changeEtatReservation(reservation, 'REFUSEE')">Annuler</button>
+                <button class="detail-btn" (click)="selectReservation(reservation)">Détails</button>
+                <button class="equipe-btn" (click)="loadReservationsParEquipe(reservation.equipe.id)">Équipe</button>
+              </td>
+            </tr>
+          </ng-container>
+          
+          <ng-container *ngIf="activeView === 'approved'">
+            <tr *ngFor="let reservation of reservationsValidees" [class.selected]="selectedReservation?.id === reservation.id">
+              <td>{{ reservation.id }}</td>
+              <td>{{ reservation.equipe.nom_equipe }}</td>
+              <td>{{ reservation.terrain.nom }}</td>
+              <td>{{ formatDate(reservation.dateReservation) }}</td>
+              <td>
+                <span class="status-approved">
+                  {{ getStatusText(reservation.etatReservation) }}
+                </span>
+              </td>
+              <td class="actions">
+                <button class="cancel-btn" (click)="changeEtatReservation(reservation, 'REFUSEE')">Annuler</button>
+                <button class="detail-btn" (click)="selectReservation(reservation)">Détails</button>
+                <button class="equipe-btn" (click)="loadReservationsParEquipe(reservation.equipe.id)">Équipe</button>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Réservations par équipe -->
+    <div class="reservations-list" *ngIf="activeView === 'equipe' && reservationsParEquipe.length > 0">
+      <div class="equipe-header">
+        <h3>Réservations de l'équipe: {{ reservationsParEquipe[0].equipe.nom_equipe }}
+        </h3>
+        <button class="back-btn" (click)="setActiveView('all')">Retour</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Terrain</th>
+            <th>Date de demande</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let reservation of reservationsParEquipe" [class.selected]="selectedReservation?.id === reservation.id">
+            <td>{{ reservation.id }}</td>
+            <td>{{ reservation.terrain.nom }}</td>
+            <td>{{ formatDate(reservation.dateReservation) }}</td>
+            <td>
+              <span [class]="getStatusClass(reservation.etatReservation)">
+                {{ getStatusText(reservation.etatReservation) }}
+              </span>
+            </td>
+            <td class="actions">
+              <button class="approve-btn" *ngIf="reservation.etatReservation === 'EN_ATTENTE'" (click)="changeEtatReservation(reservation, 'VALIDEE')">Valider</button>
+              <button class="cancel-btn" *ngIf="reservation.etatReservation !== 'REFUSEE'" (click)="changeEtatReservation(reservation, 'REFUSEE')">Annuler</button>
+              <button class="detail-btn" (click)="selectReservation(reservation)">Détails</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Détails d'une réservation -->
+    <div class="reservation-details" *ngIf="selectedReservation">
+      <div class="details-header">
+        <h3>Détails de la Réservation #{{ selectedReservation.id }}</h3>
+        <button class="close-btn" (click)="selectedReservation = null">Fermer</button>
+      </div>
+      <div class="details-content">
+        <div class="detail-row">
+          <span class="detail-label">Équipe:</span>
+          <span class="detail-value">{{ selectedReservation.equipe.nom_equipe }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Responsable:</span>
+          <span class="detail-value">{{ selectedReservation.equipe.responsable?.nom_responsable }} {{ selectedReservation.equipe.responsable?.prenom_responsable }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Email:</span>
+          <span class="detail-value">{{ selectedReservation.equipe.responsable?.email }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Terrain:</span>
+          <span class="detail-value">{{ selectedReservation.terrain.nom }} ({{ selectedReservation.terrain.type }})</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Date de demande:</span>
+          <span class="detail-value">{{ formatDate(selectedReservation.dateReservation) }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Statut:</span>
+          <span class="detail-value" [class]="getStatusClass(selectedReservation.etatReservation)">
+            {{ getStatusText(selectedReservation.etatReservation) }}
+          </span>
+        </div>
+  
+        <div class="actions">
+          <button class="approve-btn" *ngIf="selectedReservation.etatReservation === 'EN_ATTENTE'" (click)="changeEtatReservation(selectedReservation, 'VALIDEE')">Valider la réservation</button>
+          <button class="cancel-btn" *ngIf="selectedReservation.etatReservation !== 'REFUSEE'" (click)="changeEtatReservation(selectedReservation, 'REFUSEE')">Annuler la réservation</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Loader -->
+    <div class="loader-overlay" *ngIf="loading">
+      <div class="loader"></div>
+    </div>
+  </div>

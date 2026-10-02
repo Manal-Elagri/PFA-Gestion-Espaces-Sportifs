@@ -1,0 +1,631 @@
+/* Variables globales */
+:root {
+  --primary-color: #3f51b5;
+  --primary-light: #e8eaf6;
+  --primary-dark: #283593;
+  --secondary-color: #ff4081;
+  --success-color: #4caf50;
+  --warning-color: #ff9800;
+  --danger-color: #f44336;
+  --info-color: #2196f3;
+  --pending-color: #9e9e9e;
+  --text-primary: #212121;
+  --text-secondary: #757575;
+  --text-light: #ffffff;
+  --border-radius: 8px;
+  --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+}
+
+/* Styles généraux */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', 'Segoe UI', sans-serif;
+}
+
+body {
+  background-color: #f5f7fa;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* Container principal */
+.tableau-de-bord-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* En-tête avec statistiques */
+.header-stats {
+  margin-bottom: 32px;
+}
+
+.header-stats h1 {
+  font-size: 2.5rem;
+  margin-bottom: 24px;
+  font-weight: 500;
+  color: var(--text-primary);
+  position: relative;
+  padding-bottom: 8px;
+}
+
+.header-stats h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+}
+
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+}
+
+.stat-card {
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--card-shadow);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  transition: var(--transition);
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.club-icon {
+  background-color: var(--primary-color);
+}
+
+.equipe-icon {
+  background-color: var(--info-color);
+}
+
+.competition-icon {
+  background-color: var(--success-color);
+}
+
+.demande-icon {
+  background-color: var(--warning-color);
+}
+
+.stat-content h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.stat-content p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Conteneur de chargement */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(63, 81, 181, 0.1);
+  border-left-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Message d'erreur */
+.error-message {
+  background-color: #ffebee;
+  border-left: 4px solid var(--danger-color);
+  padding: 16px;
+  border-radius: var(--border-radius);
+  margin-bottom: 24px;
+}
+
+.btn-refresh {
+  background-color: var(--danger-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 8px;
+  transition: var(--transition);
+}
+
+.btn-refresh:hover {
+  background-color: #d32f2f;
+}
+
+/* Sections */
+.section-container {
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--card-shadow);
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #eee;
+  background-color: #fafafa;
+}
+
+.section-header h2 {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.btn-action {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+}
+
+.btn-action:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.btn-action::after {
+  content: "→";
+  margin-left: 8px;
+  font-size: 1.2rem;
+  transition: var(--transition);
+}
+
+.btn-action:hover::after {
+  transform: translateX(4px);
+}
+
+/* Cartes des clubs et équipes */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 24px;
+}
+
+.club-card, .equipe-card {
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: var(--transition);
+  background-color: white;
+  position: relative;
+  height: 100%;
+  border: 1px solid #eee;
+}
+
+.club-card:hover, .equipe-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--card-shadow);
+  border-color: var(--primary-light);
+}
+
+.club-image, .equipe-image {
+  height: 150px;
+  overflow: hidden;
+  position: relative;
+}
+
+.club-image img, .equipe-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition);
+}
+
+.club-card:hover .club-image img, .equipe-card:hover .equipe-image img {
+  transform: scale(1.05);
+}
+
+.club-info, .equipe-info {
+  padding: 16px;
+}
+
+.club-info h3, .equipe-info h3 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.club-info p, .equipe-info p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+}
+
+.equipe-info p i {
+  margin-right: 8px;
+  color: var(--info-color);
+}
+
+/* Compétitions */
+.competition-container {
+  padding: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.competition-card {
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: var(--transition);
+  background-color: white;
+  height: 100%;
+  border: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+}
+
+.competition-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--card-shadow);
+  border-color: var(--primary-light);
+}
+
+.competition-image {
+  height: 180px;
+  overflow: hidden;
+  position: relative;
+}
+
+.competition-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition);
+}
+
+.competition-card:hover .competition-image img {
+  transform: scale(1.05);
+}
+
+.sport-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.competition-info {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.competition-info h3 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+.competition-desc {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+  flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.competition-dates {
+  margin-bottom: 16px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.competition-dates i {
+  margin-right: 8px;
+  color: var(--info-color);
+}
+
+.competition-status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  align-self: flex-start;
+}
+
+.status-inscription {
+  background-color: #e3f2fd;
+  color: var(--info-color);
+}
+
+.status-encours {
+  background-color: #e8f5e9;
+  color: var(--success-color);
+}
+
+.status-termine {
+  background-color: #fafafa;
+  color: var(--text-secondary);
+}
+
+.status-avenir {
+  background-color: #fff8e1;
+  color: var(--warning-color);
+}
+
+/* Filtres */
+.filters {
+  display: flex;
+  align-items: center;
+}
+
+.filter-select {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background-color: white;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23212121' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 12px) center;
+  padding-right: 32px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.filter-select:hover, .filter-select:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+/* Table des demandes */
+.table-container {
+  padding: 24px;
+  overflow-x: auto;
+}
+
+.demandes-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.demandes-table th, .demandes-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.demandes-table th {
+  background-color: #fafafa;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+}
+
+.demandes-table tr {
+  transition: var(--transition);
+}
+
+.demandes-table tr:hover {
+  background-color: #f7f9fc;
+}
+
+.demande-status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-approuve {
+  background-color: #e8f5e9;
+  color: var(--success-color);
+}
+
+.status-refuse {
+  background-color: #ffebee;
+  color: var(--danger-color);
+}
+
+.status-attente {
+  background-color: #fff8e1;
+  color: var(--warning-color);
+}
+
+/* État vide */
+.empty-state {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* Media queries pour la responsivité */
+@media (max-width: 992px) {
+  .stats-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .tableau-de-bord-container {
+    padding: 16px;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+  }
+  
+  .btn-action {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .competition-container, .cards-container {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    padding: 16px;
+  }
+  
+  .table-container {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .stats-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .header-stats h1 {
+    font-size: 2rem;
+  }
+  
+  .competition-image, .club-image, .equipe-image {
+    height: 120px;
+  }
+}
+
+/* Animation pour une meilleure UX */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.main-content {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.section-container {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Personnalisation de la barre de défilement */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f7fa;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5cae9;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+
+
+.club-icon {
+  background: linear-gradient(45deg, #4a6cf7, #6e8fff);
+}
+
+.equipe-icon {
+  background: linear-gradient(45deg, #28a745, #5fd17b);
+}
+
+.competition-icon {
+  background: linear-gradient(45deg, #ffc107, #ffda6a);
+}
+
+.demande-icon {
+  background: linear-gradient(45deg, #dc3545, #f27180);
+}
+
+.stat-content h3 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.stat-content p {
+  font-size: 14px;
+  color: var(--secondary-color);
+}

@@ -1,0 +1,141 @@
+/* HOME */
+#home {
+	min-height: 625px;
+	background-repeat: no-repeat;
+	background-image: url('../../assets/background/e1.jpg');
+	background-size: contain; /* S'assure que l'image est bien contenue */
+	background-position: bottom right; /* Positionne l'image en bas à droite */
+	background-attachment: fixed;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	perspective: 1000px;
+	overflow: hidden;
+	background-position: 100% 100%;
+
+}
+  
+ 
+
+/* Titre */
+.wrapper.home-content h1 {
+	margin-bottom: 20px;
+	color: #111; /* Noir intense */
+	font-size: 2.8rem;
+	font-weight: 700;
+	font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+	transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+	opacity: 1;
+}
+
+/* Paragraphe */
+.wrapper.home-content p {
+	color: #333; /* Texte légèrement gris pour le confort visuel */
+	font-size: 1.125rem;
+	line-height: 1.7;
+	font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+	max-width: 700px;
+	margin: 0 auto 25px;
+}
+
+/* Bouton centré et stylisé */
+.wrapper.home-content .btn {
+	background-color: #0284c7;
+	color: white;
+	border: none;
+	padding: 0.75rem 1.5rem;
+	font-size: 1.1rem;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	font-weight: 600;
+	transition: background-color 0.3s ease, transform 0.3s ease;
+	margin: 0 auto;
+	display: inline-block;
+	justify-content: center;
+	align-items: center;
+
+}
+
+.wrapper.home-content .btn:hover {
+	background-color: #0369a1;
+	transform: scale(1.05);
+	justify-content: center;
+	align-items: center;
+}
+
+
+
+  
+  /* Offer */
+  #offer {
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+	background-attachment: fixed;
+	perspective: 1000px;
+	overflow: hidden;
+	background-image: url("../../assets/background/back4.jpg");
+  }
+  
+  #offer h2 {
+	font-size: 40px;
+	margin-bottom: 20px;
+	background-image: none;
+	transform: translateY(0);
+	transition: transform 0.5s ease-in-out;
+	opacity: 1;
+	transition: opacity 0.5s ease-in-out;
+  }
+  
+  /* Gallery */
+  .wrapper.flex-row.gallery-item {
+	margin-top: 50px;
+	display: flex;
+	justify-content: flex-start;
+  }
+  
+  .wrapper.flex-row.gallery-item a img {
+	width: 200px; /* ou la largeur que tu veux */
+	height: 200px; /* hauteur souhaitée */
+	object-fit: cover; /* ou 'contain' selon l'effet désiré */
+	display: block;
+	transition: transform 0.5s ease-in-out;
+	border-radius: 10px; /* optionnel, pour un beau rendu */
+}
+
+  
+  .wrapper.flex-row.gallery-item a img {
+	width: 100%;
+	display: block;
+	transition: transform 0.5s ease-in-out;
+  }
+  
+  /* General Hover Effect */
+  .hover-effect {
+	transition: transform 0.5s ease-in-out;
+  }
+  
+  .hover-effect:hover {
+	transform: scale(1.1);
+  }
+
+
+
+  .title-center {
+	text-align: center;
+  }
+  
+  .title-with-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	font-size: 2rem; /* ajuste selon ton design */
+  }
+  
+  .title-with-icon img {
+	width: 50px;
+	height: 50px;
+  }
+  
+  

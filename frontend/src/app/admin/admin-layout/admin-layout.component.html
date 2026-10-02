@@ -1,0 +1,84 @@
+
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <!-- Logo et titre -->
+    <div class="sidebar-header">
+      <div class="logo">
+        <span class="logo-icon">🏅</span>
+        <h1>SportENSAJ Admin</h1>
+      </div>
+    </div>
+    
+    <!-- Navigation principale -->
+    <nav class="main-nav">
+      <ul>
+        <li>
+          <a routerLink="/admin/competition" routerLinkActive="active">
+            <i class="menu-icon">🏆</i>
+            <span>Organisation des Compétitions</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/admin/reservations" routerLinkActive="active">
+            <i class="menu-icon">⚽</i>
+            <span>Réservations de Terrains</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/admin/rejoindre-competition" routerLinkActive="active">
+            <i class="menu-icon">🤝</i>
+            <span>Rejoindre des Compétitions</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/admin/statistics" routerLinkActive="active">
+            <i class="menu-icon">📊</i>
+            <span>Statistiques des Performances</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/admin/utilisateurs" routerLinkActive="active">
+            <i class="menu-icon">👥</i>
+            <span>Gestion des Utilisateurs</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/admin/terrains" routerLinkActive="active">
+            <i class="menu-icon">🏟️</i>
+            <span>Gestion des Terrains</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    
+    <!-- Bouton de déconnexion -->
+    <div class="sidebar-footer">
+      <button (click)="logout()" class="logout-btn">
+        <i class="logout-icon">🚪</i>
+        <span>Déconnexion</span>
+      </button>
+    </div>
+  </aside>
+  
+  <!-- Main Content Area -->
+  <div class="main-wrapper">
+    <header class="main-header">
+      <div class="header-left">
+        <button class="menu-toggle" (click)="toggleSidebar()">
+          <i class="menu-icon">☰</i>
+        </button>
+      </div>
+      <div class="header-right">
+        <div class="user-info">
+          <span class="user-name">Admin</span>
+          <img src="../../../assets/avatar-placeholder.png" alt="Admin" class="user-avatar">
+        </div>
+      </div>
+    </header>
+    <!-- Contenu dynamique -->
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

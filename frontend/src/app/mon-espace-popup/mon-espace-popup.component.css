@@ -1,0 +1,261 @@
+/* Styles pour Mon Espace Popup */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.popup-card {
+  background: #fff;
+  width: 90%;
+  max-width: 460px;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  position: relative;
+  animation: slideUp 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  transform-origin: center bottom;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(60px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.close-button:hover {
+  background: #fff;
+  transform: rotate(90deg);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+}
+
+.close-button i {
+  color: #333;
+  font-size: 18px;
+}
+
+.card-content {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeIn 0.4s ease;
+}
+
+.popup-image {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease;
+}
+
+.popup-image:hover {
+  transform: scale(1.02);
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #222;
+  text-align: center;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #3f51b5, #5c6bc0);
+  border-radius: 3px;
+}
+
+p {
+  text-align: center;
+  color: #555;
+  margin-bottom: 25px;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+.button-group {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #3f51b5, #5c6bc0);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #344397, #4a59a7);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(63, 81, 181, 0.3);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  color: white;
+}
+
+.btn-success:hover {
+  background: linear-gradient(135deg, #3d8c40, #57a05b);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
+}
+
+.role-selection {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.role-button {
+  background-color: #f5f7ff;
+  border: 2px solid #e0e6ff;
+  border-radius: 12px;
+  padding: 20px;
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.role-button:hover {
+  border-color: #3f51b5;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(63, 81, 181, 0.15);
+}
+
+.role-button i {
+  font-size: 32px;
+  color: #3f51b5;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+.role-button:hover i {
+  transform: scale(1.15);
+}
+
+.role-button::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #3f51b5, #5c6bc0);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.role-button:hover::after {
+  transform: scaleX(1);
+}
+
+/* Animation pour transition entre cartes */
+.card-content {
+  animation: fadeSlide 0.4s ease;
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .popup-card {
+    width: 95%;
+    max-width: none;
+  }
+  
+  .button-group {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+  
+  .role-selection {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .role-button {
+    width: 85%;
+  }
+}

@@ -1,0 +1,98 @@
+<div class="container my-4">
+    <!-- En-tête du site -->
+    <div class="site-header">
+      <h1 class="site-title">Gestion des Terrains Sportifs</h1>
+      <p class="site-subtitle">ENSAJ - Plateforme de gestion des espaces sportifs</p>
+    </div>
+  
+    <!-- Bouton Ajouter un terrain -->
+    <div class="text-end mb-3">
+      <button class="btn btn-success" (click)="toggleForm()">
+        <i class="bi bi-plus-lg me-1"></i>
+        <span>Ajouter un terrain</span>
+      </button>
+    </div>
+  
+    <!-- Formulaire de terrain -->
+    <div *ngIf="showForm" class="form-container mb-5 position-relative">
+      <button class="form-close-btn" (click)="toggleForm()" aria-label="Fermer">
+        <i class="bi bi-x-lg"></i>
+      </button>
+  
+      <h4 class="mb-3">{{ editMode ? 'Modifier' : 'Ajouter' }} un terrain</h4>
+  
+      <form [formGroup]="terrainForm" (ngSubmit)="onSubmit()">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Nom</label>
+            <input formControlName="nom" class="form-control" />
+          </div>
+  
+          <div class="form-group">
+            <label class="form-label">Mesure</label>
+            <input formControlName="mesure" class="form-control" />
+          </div>
+  
+          <div class="form-group">
+            <label class="form-label">Catégorie</label>
+            <select formControlName="categorieTerrain" class="form-select">
+              <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+            </select>
+          </div>
+  
+          <div class="form-group">
+            <label class="form-label">Disponibilité</label>
+            <select formControlName="estDisponible" class="form-select">
+              <option [value]="true">Disponible</option>
+              <option [value]="false">Indisponible</option>
+            </select>
+          </div>
+  
+          <div class="form-group full-width">
+            <label class="form-label">Image</label>
+            <input type="file" class="form-control" (change)="onFileSelected($event)" />
+          </div>
+  
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary me-2" [disabled]="terrainForm.invalid">
+              {{ editMode ? 'Mettre à jour' : 'Ajouter' }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  
+    <!-- 📦 Cartes des terrains -->
+    <div class="row g-4">
+      <div class="col-md-4" *ngFor="let terrain of terrains">
+        <div class="card h-100 shadow-sm">
+          <img *ngIf="terrain.imageURL" [src]="terrain.imageURL" class="card-img-top" alt="Image terrain" />
+          <div class="card-body">
+            <h5 class="card-title">{{ terrain.nom }}</h5>
+            <ul class="list-unstyled small">
+              <li><strong>Mesure :</strong> {{ terrain.mesure }}</li>
+              <li><strong>Catégorie :</strong> {{ terrain.categorieTerrain }}</li>
+              <li>
+                <strong>Statut :</strong>
+                <span [ngClass]="terrain.estDisponible ? 'text-success' : 'text-danger'">
+                  {{ terrain.estDisponible ? 'Disponible' : 'Indisponible' }}
+                </span>
+              </li>
+            </ul>
+          </div>
+          <div *ngIf="successMessage" class="alert alert-success mt-3">
+            {{ successMessage }}
+          </div>
+          <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+            {{ errorMessage }}
+          </div>
+  
+          <div class="card-footer d-flex justify-content-between">
+            <button class="btn btn-sm btn-warning" (click)="editTerrain(terrain)">Modifier</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteTerrain(terrain.id)">Supprimer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

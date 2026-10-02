@@ -1,0 +1,321 @@
+/* Styles de base */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
+
+/* Conteneurs principaux - ajustés pour créer l'effet de carte */
+.login-container, .register-container {
+  min-height: 100vh;
+  background: linear-gradient(to right, #f8f9fa, #e9ecef);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Wrapper pour créer l'effet de carte avec marges égales */
+.auth-card-wrapper {
+  display: flex;
+  max-width: 1000px;
+  width: 90%; /* corriger aussi ici ! pas 850% */
+  margin: auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  height: 500px;/* par exemple, au lieu de 10vh */
+}
+
+/* Container d'image */
+.image-container {
+  height: 500px;
+  overflow: hidden;
+  position: relative;
+  flex: 1;
+  border-radius: 12px 0 0 12px;
+}
+
+.login-image, .register-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s;
+}
+
+.login-image:hover, .register-image:hover {
+  transform: scale(1.05);
+}
+
+/* Bouton de fermeture */
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  cursor: pointer;
+  color: #333;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.close-btn:hover {
+  background: #ff3547;
+  color: white;
+  transform: rotate(90deg);
+}
+
+/* Container du formulaire */
+.form-container {
+  background: white;
+  border-radius: 0 12px 12px 0;
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 1.5rem;
+}
+
+.form-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+}
+
+/* En-tête du formulaire */
+.form-header {
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.form-header h2 {
+  color: #333;
+  font-weight: 700;
+  font-size: 22px;
+  margin-bottom: 0.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.form-header h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+}
+
+.form-header p {
+  color: #6c757d;
+  font-size: 13px;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+
+/* Actions du formulaire */
+.form-actions {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.form-actions button {
+  padding: 10px 2px;
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 20;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(78, 84, 200, 0.3);
+  display: inline-block;
+  width: 50%;
+}
+
+.form-actions button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 7px 15px rgba(78, 84, 200, 0.4);
+}
+
+.form-actions button:active {
+  transform: translateY(1px);
+}
+
+/* Sélection de rôle */
+.role-selection {
+  display: flex;
+  justify-content: space-around;
+  margin: 2.5rem 0 1.5rem;
+}
+
+.role-option {
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  border: 2px solid #e9ecef;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  width: 45%;
+}
+
+.role-option:hover {
+  border-color: #8f94fb;
+  transform: translateY(-5px);
+}
+
+.role-option.active {
+  border-color: #4e54c8;
+  background-color: rgba(78, 84, 200, 0.05);
+}
+
+.role-option i {
+  font-size: 24px;
+  color: #4e54c8;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.role-option span {
+  font-weight: 500;
+  color: #495057;
+}
+
+/* Inputs et form controls */
+.form-control {
+  padding: 6px 15px;
+  font-size: 14px;
+  height: auto;
+  min-height: 35px;
+  border: 1px solid #ced4da;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #8f94fb;
+  box-shadow: 0 0 0 0.2rem rgba(78, 84, 200, 0.15);
+}
+
+.form-label {
+  color: #495057;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+/* Liens */
+a {
+  color: #4e54c8;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #8f94fb;
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .auth-card-wrapper {
+    flex-direction: column;
+    width: 95%;
+    max-width: 500px;
+  }
+  
+  .image-container {
+    height: 30vh;
+    width: 100%;
+    border-radius: 12px 12px 0 0;
+  }
+  
+  .form-container {
+    padding: 6px 15px;
+    font-size: 14px;
+    height: auto;
+    min-height: 35px;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.auth-card-wrapper {
+  animation: fadeIn 0.6s ease-out;
+}
+/* Réduire l'espacement entre les champs */
+.mb-3 {
+  margin-bottom: 0.6rem !important;
+}
+
+.row {
+  margin-bottom: 0 !important;
+}
+.form-label, label {
+  margin-bottom: 0.25rem;
+  font-size: 13px;
+}
+
+/* Actions du formulaire */
+.form-actions {
+  margin-top: 0.75rem;
+}
+
+.form-actions button {
+  padding: 8px 2px;
+  font-size: 14px;
+}
+
+.form-actions p {
+  margin-top: 0.5rem !important;
+  font-size: 13px;
+}
+
+/* Réduire la taille des messages d'erreur */
+.invalid-feedback {
+  font-size: 11px;
+  margin-top: 0.1rem;
+}
+
+.alert {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 13px;
+}
+
+/* Ajuster la taille du bouton fermer */
+.close-btn {
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+}
+
+/* Réduire l'espace pris par les spinners */
+.spinner-border-sm {
+  width: 0.8rem;
+  height: 0.8rem;
+}

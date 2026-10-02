@@ -1,0 +1,340 @@
+<div class="statistics-container">
+    <!-- Message d'erreur -->
+    <div *ngIf="error" class="alert-message error-message">
+      <div class="alert-content">
+        <span class="icon-warning"></span>
+        <span>{{ error }}</span>
+      </div>
+      <button type="button" class="btn-close" (click)="error = null" aria-label="Fermer">
+        <span class="icon-close"></span>
+      </button>
+    </div>
+  
+    <!-- En-tête -->
+    <div class="header">
+      <h1>Statistiques et Résultats</h1>
+    </div>
+  
+    <!-- Navigation par onglets -->
+    <div class="navigation-tabs">
+      <button [class.active]="activeTab === 'scores'" (click)="setActiveTab('scores')">
+        Tableaux de Score
+      </button>
+      <button [class.active]="activeTab === 'matches'" (click)="setActiveTab('matches')">
+        Résultats des Matchs
+      </button>
+      <button [class.active]="activeTab === 'charts'" (click)="setActiveTab('charts')">
+        Graphiques
+      </button>
+    </div>
+  
+    <!-- Loader -->
+    <div class="loader-overlay" *ngIf="loading">
+      <div class="loader"></div>
+    </div>
+  
+    <!-- Tableaux de Score -->
+    <div class="tab-content" *ngIf="activeTab === 'scores'">
+      <div class="section-header">
+        <h2>Tableaux de Score des Clubs</h2>
+        <div class="actions">
+          <button class="btn-export" (click)="exportToCSV('scores')">
+            <span class="icon-download"></span> Exporter en CSV
+          </button>
+        </div>
+      </div>
+  
+      <!-- Formulaire pour ajouter/modifier un tableau de score -->
+      <div class="form-container">
+        <h3>{{ isEditingScore ? 'Modifier le' : 'Ajouter un' }} tableau de score</h3>
+        <form [formGroup]="scoreForm" (ngSubmit)="onSubmitScore()">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="clubId">Club</label>
+              <select id="clubId" formControlName="clubId" required>
+                <option value="">Sélectionner un club</option>
+                <option *ngFor="let club of clubs" [value]="club.id">{{ club.nom }}</option>
+              </select>
+              <div class="error-message" *ngIf="scoreForm.get('clubId')?.invalid && scoreForm.get('clubId')?.touched">
+                Veuillez sélectionner un club
+              </div>
+            </div>
+          </div>
+  
+          <div class="form-row">
+            <div class="form-group">
+              <label for="matchsJoues">Matchs joués</label>
+              <input type="number" id="matchsJoues" formControlName="matchsJoues" min="0" (change)="validateMatchesCount()">
+            </div>
+  
+            <div class="form-group">
+              <label for="matchsGagnes">Matchs gagnés</label>
+              <input type="number" id="matchsGagnes" formControlName="matchsGagnes" min="0" (change)="calculatePoints(); validateMatchesCount()">
+            </div>
+  
+            <div class="form-group">
+              <label for="matchsNuls">Matchs nuls</label>
+              <input type="number" id="matchsNuls" formControlName="matchsNuls" min="0" (change)="calculatePoints(); validateMatchesCount()">
+            </div>
+  
+            <div class="form-group">
+              <label for="matchsPerdus">Matchs perdus</label>
+              <input type="number" id="matchsPerdus" formControlName="matchsPerdus" min="0" (change)="validateMatchesCount()">
+            </div>
+  
+            <div class="form-group">
+              <label for="points">Points</label>
+              <input type="number" id="points" formControlName="points" min="0" readonly>
+              <small>Calculé automatiquement (3 points par victoire, 1 point par match nul)</small>
+            </div>
+          </div>
+  
+          <div class="form-actions">
+            <button type="submit" class="btn-primary" [disabled]="scoreForm.invalid">
+              {{ isEditingScore ? 'Mettre à jour' : 'Ajouter' }}
+            </button>
+            <button type="button" class="btn-secondary" (click)="resetScoreForm()">
+              Annuler
+            </button>
+          </div>
+        </form>
+      </div>
+  
+      <!-- Tableau des scores -->
+      <div class="table-container">
+        <div class="table-filter">
+          <div class="search-box">
+            <input type="text" (input)="applyScoreFilter($event)" placeholder="Filtrer les clubs" [value]="scoreFilter">
+            <span class="icon-search"></span>
+          </div>
+        </div>
+  
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Club</th>
+                <th>J</th>
+                <th>G</th>
+                <th>N</th>
+                <th>P</th>
+                <th>Pts</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let score of filteredScores; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ score.clubs.nom }}</td>
+                <td>{{ score.matchsJoues }}</td>
+                <td>{{ score.matchsGagnes }}</td>
+                <td>{{ score.matchsNuls }}</td>
+                <td>{{ score.matchsPerdus }}</td>
+                <td>{{ score.points }}</td>
+                <td>
+                  <button class="btn-edit" (click)="editScore(score)">
+                    <span class="icon-edit"></span>
+                  </button>
+                  <button class="btn-delete" (click)="deleteScore(score.id)">
+                    <span class="icon-delete"></span>
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="filteredScores.length === 0">
+                <td colspan="8" class="no-data">Aucun tableau de score trouvé</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  
+        <div class="pagination">
+          <!-- Pagination simple -->
+          <button class="btn-page">Précédent</button>
+          <span class="page-info">Page 1</span>
+          <button class="btn-page">Suivant</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Résultats des Matchs -->
+    <div class="tab-content" *ngIf="activeTab === 'matches'">
+      <div class="section-header">
+        <h2>Résultats des Matchs</h2>
+        <div class="actions">
+          <button class="btn-export" (click)="exportToCSV('matches')">
+            <span class="icon-download"></span> Exporter en CSV
+          </button>
+        </div>
+      </div>
+  
+      <!-- Formulaire pour ajouter/modifier un résultat de match -->
+      <div class="form-container">
+        <h3>{{ isEditingMatch ? 'Modifier le' : 'Ajouter un' }} résultat de match</h3>
+        <form [formGroup]="matchResultForm" (ngSubmit)="onSubmitMatchResult()">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="competitionId">Compétition</label>
+              <select id="competitionId" formControlName="competitionId" required>
+                <option value="">Sélectionner une compétition</option>
+                <option *ngFor="let competition of competitions" [value]="competition.id">{{ competition.nom }}</option>
+              </select>
+            </div>
+  
+            <div class="form-group">
+              <label for="dateMatch">Date du match</label>
+              <input type="date" id="dateMatch" formControlName="dateMatch" required>
+            </div>
+  
+            <div class="form-group">
+              <label for="terrainId">Terrain</label>
+              <select id="terrainId" formControlName="terrainId" required>
+                <option value="">Sélectionner un terrain</option>
+                <option *ngFor="let terrain of terrains" [value]="terrain.id">{{ terrain.nom }}</option>
+              </select>
+            </div>
+          </div>
+  
+          <div class="form-row match-score-row">
+            <div class="form-group">
+              <label for="clubAId">Club A</label>
+              <select id="clubAId" formControlName="clubAId" required>
+                <option value="">Sélectionner un club</option>
+                <option *ngFor="let club of clubs" [value]="club.id">{{ club.nom }}</option>
+              </select>
+            </div>
+  
+            <div class="form-group score-group">
+              <label for="scoreEquipeA">Score A</label>
+              <input type="number" id="scoreEquipeA" formControlName="scoreEquipeA" min="0">
+            </div>
+  
+            <div class="score-separator">-</div>
+  
+            <div class="form-group score-group">
+              <label for="scoreEquipeB">Score B</label>
+              <input type="number" id="scoreEquipeB" formControlName="scoreEquipeB" min="0">
+            </div>
+  
+            <div class="form-group">
+              <label for="clubBId">Club B</label>
+              <select id="clubBId" formControlName="clubBId" required>
+                <option value="">Sélectionner un club</option>
+                <option *ngFor="let club of clubs" [value]="club.id">{{ club.nom }}</option>
+              </select>
+            </div>
+          </div>
+  
+          <div class="form-row">
+            <div class="form-group">
+              <label for="statutMatch">Statut du match</label>
+              <select id="statutMatch" formControlName="statutMatch" required>
+                <option value="">Sélectionner un statut</option>
+                <option value="Reporté">Reporté</option>
+                <option value="EN_Cours">En cours</option>
+                <option value="Terminé">Terminé</option>
+                <option value="Annulé">Annulé</option>
+              </select>
+            </div>
+  
+            <div class="form-group full-width">
+              <label for="commentaires">Commentaires</label>
+              <textarea id="commentaires" formControlName="commentaires" rows="3"></textarea>
+            </div>
+          </div>
+  
+          <div class="form-actions">
+            <button type="submit" class="btn-primary" [disabled]="matchResultForm.invalid">
+              {{ isEditingMatch ? 'Mettre à jour' : 'Ajouter' }}
+            </button>
+            <button type="button" class="btn-secondary" (click)="resetMatchForm()">
+              Annuler
+            </button>
+          </div>
+        </form>
+      </div>
+  
+      <!-- Tableau des résultats de matchs -->
+      <div class="table-container">
+        <div class="table-filter">
+          <div class="search-box">
+            <input type="text" (input)="applyMatchFilter($event)" placeholder="Filtrer les matchs" [value]="matchFilter">
+            <span class="icon-search"></span>
+          </div>
+        </div>
+  
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Compétition</th>
+                <th>Club A</th>
+                <th>Score</th>
+                <th>Club B</th>
+                <th>Terrain</th>
+                <th>Statut</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let match of filteredMatches">
+                <td>{{ formatDate(match.dateMatch) }}</td>
+                <td>{{ match.competition.nom }}</td>
+                <td>{{ match.clubA.nom }}</td>
+                <td class="score-cell">
+                  <span [class.winner]="match.scoreEquipeA > match.scoreEquipeB">{{ match.scoreEquipeA }}</span>
+                  -
+                  <span [class.winner]="match.scoreEquipeB > match.scoreEquipeA">{{ match.scoreEquipeB }}</span>
+                </td>
+                <td>{{ match.clubB.nom }}</td>
+                <td>{{ match.terrain.nom }}</td>
+                <td>
+                  <span class="status-badge" [ngClass]="getStatusClass(match.statutMatch)">
+                    {{ match.statutMatch }}
+                  </span>
+                </td>
+                <td>
+                  <button class="btn-edit" (click)="editMatchResult(match)">
+                    <span class="icon-edit"></span>
+                  </button>
+                  <button class="btn-delete" (click)="deleteMatchResult(match.id)">
+                    <span class="icon-delete"></span>
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="filteredMatches.length === 0">
+                <td colspan="8" class="no-data">Aucun résultat de match trouvé</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  
+        <div class="pagination">
+          <!-- Pagination simple -->
+          <button class="btn-page">Précédent</button>
+          <span class="page-info">Page 1</span>
+          <button class="btn-page">Suivant</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Graphiques -->
+    <div class="tab-content" *ngIf="activeTab === 'charts'">
+      <div class="charts-container">
+        <div class="chart-card">
+          <h3>Points par club</h3>
+          <div class="chart-wrapper">
+            <canvas id="pointsChart"></canvas>
+          </div>
+        </div>
+  
+        <div class="chart-card">
+          <h3>Statistiques des matchs par club</h3>
+          <div class="chart-wrapper">
+            <canvas id="matchesChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

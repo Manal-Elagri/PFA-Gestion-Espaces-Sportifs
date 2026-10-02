@@ -1,0 +1,93 @@
+.card {
+	text-align: center;
+	background-color: #0099ff6b;
+	margin-right: 20px;
+	padding: 20px;
+	border-radius: 15px;
+	box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+	transition: transform 0.3s ease-in-out;
+	height: 350px;
+	width: 280px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+  }
+  
+  .card:hover {
+	transform: scale(1.05);
+  }
+  
+  img {
+	width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  transition: transform 0.3s ease-in-out;
+  }
+  
+  img:hover {
+	transform: scale(1.1);
+  }
+  
+  h3 {
+	margin-bottom: 15px;
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 1.2;
+	color: #000000;
+	text-transform: uppercase;
+	transition: color 0.3s ease-in-out;
+  }
+  
+  h3:hover {
+	color: #ffcc33ff;
+  }
+  
+  p {
+	color: #000000;
+	font-size: 16px;
+	transition: color 0.3s ease-in-out;
+  }
+  
+  p:hover {
+	color: #ffcc33ff;
+  }
+  
+  .price {
+	color: #ffcc33ff;
+	font-family: "Poppins", sans-serif;
+	font-weight: bold;
+	font-size: 20px;
+	transition: color 0.3s ease-in-out;
+  }
+  
+  .price:hover {
+	color: #ffffff;
+  }
+  
+  .carousel-nav {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+  }
+  
+  .carousel-nav button {
+	background: transparent;
+	color: #2b2a2a;
+	border: none;
+	margin-right: 10px;
+	font-size: 18px;
+	cursor: pointer;
+	transition: color 0.3s ease-in-out;
+  }
+  
+  .carousel-nav button:hover {
+	color: #ffcc33ff;
+  }
+  
+  ::ng-deep .carousel-control {
+	display: none;
+  }
+  

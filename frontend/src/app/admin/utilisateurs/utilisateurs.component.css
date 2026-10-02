@@ -1,0 +1,468 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', 'Helvetica', sans-serif;
+}
+
+body {
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.admin-demandes-container {
+  max-width: 1400px;
+  margin: 20px auto;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* ====== CARTES DE STATISTIQUES ====== */
+.statistics-cards {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 15px;
+}
+
+.stats-card {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border-left: 3px solid;
+}
+
+.stats-card.total {
+  border-left-color: #3498db;
+}
+
+.stats-card.club {
+  border-left-color: #2ecc71;
+}
+
+.stats-card.equipe {
+  border-left-color: #e74c3c;
+}
+
+.stats-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 4px;
+  margin-right: 15px;
+  font-size: 18px;
+}
+
+.stats-card.total .stats-icon {
+  background-color: rgba(52, 152, 219, 0.1);
+  color: #3498db;
+}
+
+.stats-card.club .stats-icon {
+  background-color: rgba(46, 204, 113, 0.1);
+  color: #2ecc71;
+}
+
+.stats-card.equipe .stats-icon {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+}
+
+.stats-info h3 {
+  font-size: 14px;
+  font-weight: 500;
+  color: #6c757d;
+  margin-bottom: 3px;
+}
+
+.stats-number {
+  font-size: 24px;
+  font-weight: 600;
+  color: #343a40;
+}
+
+/* ====== ONGLETS ====== */
+.tabs-container {
+  display: flex;
+  background-color: #f1f3f5;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.tab {
+  flex: 1;
+  padding: 12px 15px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 500;
+  color: #495057;
+  transition: all 0.2s;
+  border-bottom: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.tab i {
+  font-size: 16px;
+}
+
+.tab:hover {
+  background-color: #e9ecef;
+}
+
+.tab.active {
+  background-color: #fff;
+  color: #3498db;
+  border-bottom: 2px solid #3498db;
+}
+
+.count-badge {
+  background-color: #3498db;
+  color: white;
+  border-radius: 2px;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* ====== ALERTES ====== */
+.alert {
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.alert-danger {
+  background-color: #fdedec;
+  color: #c0392b;
+  border-left: 5px solid #e74c3c;
+}
+
+.alert-success {
+  background-color: #e9f7ef;
+  color: #27ae60;
+  border-left: 5px solid #2ecc71;
+}
+
+/* ====== TABLEAUX ====== */
+.tab-content {
+  margin-top: 20px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 14px;
+  text-align: center; /* Centrage du contenu */
+}
+
+.tab-content h2 {
+  font-size: 20px;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.tab-content h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background-color: #3498db;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 13px;
+}
+
+thead {
+  background-color: #f8f9fb;
+}
+
+th, td {
+  text-align: center; /* Centrer le contenu */
+  padding: 6px;
+  border: 1px solid #ddd; /* Bordure verticale fine */
+  vertical-align: middle;
+}
+
+th {
+  font-weight: 600;
+  color: #5d6778;
+}
+
+tbody tr {
+  background-color: #ffffff;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f8f9fb;
+}
+
+/* ====== BADGES ====== */
+.badge {
+  padding: 4px 8px;
+  border-radius: 2px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.badge-club {
+  background-color: rgba(46, 204, 113, 0.1);
+  color: #2ecc71;
+}
+
+.badge-equipe {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 2px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.status-en-attente {
+  background-color: rgba(243, 156, 18, 0.1);
+  color: #f39c12;
+}
+
+.status-approuve {
+  background-color: rgba(46, 204, 113, 0.1);
+  color: #2ecc71;
+}
+
+.status-refuse {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+}
+
+/* ====== BOUTONS ====== */
+.actions-cell {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+button {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.2s;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button i {
+  font-size: 13px;
+}
+
+.btn-approve {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.btn-approve:hover:not(:disabled) {
+  background-color: #27ae60;
+}
+
+.btn-reject {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-reject:hover:not(:disabled) {
+  background-color: #c0392b;
+}
+
+.btn-view {
+  background-color: #3498db;
+  color: white;
+}
+
+.btn-view:hover {
+  background-color: #2980b9;
+}
+
+.btn-cancel {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+.btn-cancel:hover {
+  background-color: #dee2e6;
+}
+
+/* ====== SPINNER DE CHARGEMENT ====== */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 25px 0;
+}
+
+.spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(52, 152, 219, 0.1);
+  border-radius: 50%;
+  border-top-color: #3498db;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-spinner p {
+  color: #6c757d;
+  font-size: 14px;
+}
+
+/* ====== MESSAGE PAS DE DONNÉES ====== */
+.no-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 0;
+  color: #6c757d;
+}
+
+.no-data i {
+  font-size: 30px;
+  margin-bottom: 10px;
+  opacity: 0.6;
+}
+
+/* ====== MODAL ====== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 3px;
+  width: 450px;
+  max-width: 90%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-header h3 {
+  color: #343a40;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #6c757d;
+  cursor: pointer;
+  padding: 0;
+}
+
+.close-btn:hover {
+  color: #343a40;
+}
+
+.modal-body {
+  padding: 15px;
+}
+/* ====== DESIGN DES LOGOS ====== */
+td img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 3px solid #fff;
+  transition: all 0.3s ease;
+  background-color: #fff;
+  }
+  /* Style spécifique pour les logos de clubs */
+  .clubs-table td img {
+  border: 3px solid #2ecc71;
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+  background-color: #fff;
+  padding: 3px;
+  }
+  .clubs-table td img {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(46, 204, 113, 0.4);
+  }
+  /* Style spécifique pour les logos d'équipes */
+  .equipes-table td img {
+  border: 3px solid #e74c3c;
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+  background-color: #fff;
+  padding: 3px;
+  }
+  .equipes-table td img {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(231, 76, 60, 0.4);
+  }
+  /* Effet hexagonal pour les logos (style professionnel) */
+  .clubs-table td img, .equipes-table td img {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  padding: 0;
+  }
+  /* Animation douce au survol des logos */
+  @keyframes gentle-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+  }
+  .clubs-table td img, .equipes-table td img {
+  animation: gentle-pulse 1.5s infinite;
+  }

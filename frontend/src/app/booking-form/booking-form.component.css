@@ -1,0 +1,82 @@
+#booking-table {
+	background-repeat: repeat;
+}
+
+.wrapper.flex-row.wrapp-booking-form {
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.booking-form,
+.working-hours {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.booking-form {
+	padding-right: 50px;
+}
+
+.working-hours {
+	padding: 30px;
+}
+
+.working-hours h3 {
+	margin-bottom: 20px;
+}
+
+.wrapp-input-group.flex-row {
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+}
+
+.wrapp-input-group.flex-row > div {
+	width: 48%;
+	margin-bottom: 20px;
+	transition: transform 0.3s ease-in-out;
+}
+
+.wrapp-input-group.flex-row > div label {
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	font-size: 10px;
+	margin-bottom: 10px;
+	display: block;
+}
+
+.wrapp-input-group.flex-row > div input {
+	display: block;
+	width: 100%;
+	border: none;
+	outline: none;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 8px 16px;
+	height: 60px;
+	border: 1px solid #000;
+	border-radius: 3px;
+	transition: border-color 0.3s ease-in-out;
+}
+
+.wrapp-input-group.flex-row > div input:focus {
+	border-color: #ffcc33ff;
+}
+
+button:hover {
+	cursor: pointer;
+	transform: scale(1.05);
+	transition: transform 0.3s ease-in-out;
+}
+
+.flex-row.table-hours {
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+	margin: 40px 0px;
+	border-bottom: 1px solid #b8b8b8;
+}

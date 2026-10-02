@@ -1,0 +1,188 @@
+/* SECTION TITRES */
+  .title-center {
+	text-align: center;
+	margin-bottom: 40px;
+  }
+  
+  .title-with-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 15px;
+	font-size: clamp(1.5rem, 2vw, 2.2rem);
+	font-weight: 700;
+	position: relative;
+	padding-bottom: 15px;
+	color: #000;
+  }
+  
+  .title-with-icon::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 80px;
+	height: 3px;
+	background-color: #ffcc33;
+  }
+  
+  .title-with-icon img {
+	width: 45px;
+	height: 45px;
+	object-fit: contain;
+  }
+  
+  /* SECTION CAROUSEL */
+  .carousel-container {
+	max-width: 100%;
+	margin: 0 auto;
+	overflow: hidden;
+	position: relative;
+  }
+  
+  .carousel-navigation {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 20px 0;
+  }
+  
+  .nav-button {
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	border: none;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: background 0.3s ease;
+  }
+  
+  .nav-button:hover {
+	background: rgba(0, 0, 0, 0.8);
+  }
+  
+  .carousel-wrapper {
+	overflow: hidden;
+	padding: 0 20px;
+  }
+  
+  .terrains-carousel {
+	display: flex;
+	justify-content: center; /* 👈 centre les terrains */
+	gap: 20px;
+	flex-wrap: wrap; /* utile si écran petit */
+	transition: transform 0.5s ease;
+  }
+
+  
+  /* TERRAIN ITEM */
+ /* TERRAIN ITEM */
+.terrain-item {
+	flex: 0 0 calc(33.333% - 20px);
+	position: relative;
+	overflow: hidden;
+	border-radius: 8px;
+	background: #fff;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	transition: transform 0.3s ease;
+	width: 70vw; /* Prend toute la largeur de l'écran */
+	height: 380px; /* Ajuste la hauteur selon tes besoins */
+	display: flex;
+	flex-direction: column;
+  }
+  
+  .terrain-item:hover {
+	transform: translateY(-5px);
+  }
+  
+  .terrain-image {
+	height: 90%; /* 75% de la hauteur totale */
+	overflow: hidden;
+  }
+  
+  .terrain-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.5s ease;
+  }
+  
+  .terrain-item:hover .terrain-image img {
+	transform: scale(1.1);
+  }
+  
+  .terrain-status {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+	padding: 5px 10px;
+	border-radius: 4px;
+	font-size: 0.9rem;
+	font-weight: bold;
+	color: white;
+  }
+  
+  .status-available {
+	background-color: #28a745;
+  }
+  
+  .status-unavailable {
+	background-color: #dc3545;
+  }
+  
+  .terrain-name {
+	height: 10%; /* 25% de la hauteur totale */
+	padding: 5px;
+	background-color: #f8f9fa;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  }
+  
+  .terrain-name h3 {
+	margin: 0;
+	font-size: 1rem;
+	color: #333;
+	transition: color 0.3s ease;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 100%;
+  }
+  
+  .terrain-item:hover .terrain-name h3 {
+	color: #fdca33;
+  }
+  
+  /* MESSAGE SI AUCUN TERRAIN */
+  .no-items {
+	text-align: center;
+	padding: 30px;
+	background-color: #f8f9fa;
+	border-radius: 8px;
+	margin: 20px 0;
+	color: #777;
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 992px) {
+	.terrain-item {
+	  flex: 0 0 calc(50% - 20px);
+	}
+  }
+  
+  @media (max-width: 576px) {
+	.terrain-item {
+	  flex: 0 0 100%;
+	}
+	.chefs-item {
+	  flex: 0 0 100%;
+	}
+  }
+  

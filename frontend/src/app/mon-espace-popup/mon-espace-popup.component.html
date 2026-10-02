@@ -1,0 +1,43 @@
+<div *ngIf="isVisible" class="popup-overlay">
+  <div class="popup-card">
+    <button class="close-button" (click)="closePopup()">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    
+    <!-- Première carte -->
+    <div *ngIf="showFirstCard" class="card-content">
+      <div class="content-image-container">
+        <img src="../../assets/image-1.jpg" alt="Image" class="popup-image">
+      </div>
+      <div class="content-text-container">
+        <h2>Bienvenue sur SPORT&ENSAJ</h2>
+        <p>Accédez à votre espace personnel pour gérer vos équipes, clubs et réservations de terrains, et rejoindre les compétitions.</p>
+        
+        <div class="button-group">
+          <button class="btn btn-primary" (click)="goToSecondCard()">Commencer</button>
+          <button class="btn btn-success" (click)="goToLogin()">Se connecter</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Deuxième carte -->
+    <div *ngIf="!showFirstCard" class="card-content">
+      <div class="content-image-container">
+        <img src="../../assets/image-3.png" alt="Image" class="popup-image">
+      </div>
+      <div class="content-text-container">
+        <h2>Choisissez votre rôle</h2>
+        <p>Vous êtes étudiant ou professeur ?</p>
+        
+        <div class="role-selection">
+          <button class="role-button" (click)="goToRegister('student')">
+            <i class="fa-solid fa-user-graduate"></i> Étudiant
+          </button>
+          <button class="role-button" (click)="goToRegister('professor')">
+            <i class="fa-solid fa-chalkboard-teacher"></i> Professeur
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

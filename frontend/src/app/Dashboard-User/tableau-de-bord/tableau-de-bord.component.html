@@ -1,0 +1,114 @@
+<div class="tableau-de-bord-container"> <!-- En-tête avec statistiques --> <div class="header-stats"> <h1>Tableau de bord</h1> <div class="stats-container"> <div class="stat-card"> <div class="stat-icon club-icon"> <i class="fas fa-users"></i> </div> <div class="stat-content"> <h3>{{ totalClubs }}</h3> <p>Clubs</p> </div> </div> <div class="stat-card"> <div class="stat-icon equipe-icon"> <i class="fas fa-running"></i> </div> <div class="stat-content"> <h3>{{ totalEquipes }}</h3> <p>Équipes</p> </div> </div> <div class="stat-card"> <div class="stat-icon competition-icon"> <i class="fas fa-trophy"></i> </div> <div class="stat-content"> <h3>{{ totalCompetitions }}</h3> <p>Compétitions</p> </div> </div> <div class="stat-card"> <div class="stat-icon demande-icon"> <i class="fas fa-clock"></i> </div> <div class="stat-content"> <h3>{{ totalDemandesEnAttente }}</h3> <p>Demandes en attente</p> </div> </div> </div> </div> <!-- Message de chargement ou d'erreur --> <div *ngIf="isLoading" class="loading-container"> <div class="spinner"></div> <p>Chargement des données...</p> </div> <div *ngIf="errorMessage" class="error-message"> <p>{{ errorMessage }}</p> <button (click)="rafraichirDonnees()" class="btn-refresh">Réessayer</button> </div> <!-- Contenu principal (affiché uniquement si pas de chargement ni d'erreur) --> <div *ngIf="!isLoading && !errorMessage" class="main-content">
+<!-- Section Mes Clubs -->
+<div class="section-container clubs-section">
+  <div class="section-header">
+    <h2>Mes Clubs</h2>
+    <button class="btn-action">Gérer mes clubs</button>
+  </div>
+  <div class="cards-container">
+    <div *ngFor="let club of mesClubs" class="club-card">
+      <div class="club-image">
+        <img [src]="club.imageURL || 'assets/images/default-club.png'" [alt]="club.nom">
+      </div>
+      <div class="club-info">
+        <h3>{{ club.nom }}</h3>
+        <p>{{ club.etablissement }}</p>
+      </div>
+    </div>
+    <div *ngIf="mesClubs.length === 0" class="empty-state">
+      <p>Vous n'avez pas encore de clubs.</p>
+    </div>
+  </div>
+</div>
+
+      <!-- Section Compétitions à venir -->
+<div class="section-container competitions-section">
+  <div class="section-header">
+    <h2>Compétitions à venir</h2>
+    <div class="filters">
+      <select [(ngModel)]="filtreTypeSport" class="filter-select">
+        <option value="TOUS">Tous les sports</option>
+        <option *ngFor="let type of typesSport" [value]="type">{{ type }}</option>
+      </select>
+    </div>
+  </div>
+  <div class="competition-container">
+    <div *ngFor="let competition of filtrerCompetitionsParSport()" class="competition-card">
+      <div class="competition-image">
+        <img [src]="competition.imageURL || 'assets/images/default-competition.png'" [alt]="competition.nom">
+        <span class="sport-badge">{{ competition.typedesport }}</span>
+      </div>
+      <div class="competition-info">
+        <h3>{{ competition.nom }}</h3>
+        <p class="competition-desc">{{ competition.description }}</p>
+        <div class="competition-dates">
+          <span><i class="fas fa-calendar"></i> {{ formaterDate(competition.dateDebut) }} - {{ formaterDate(competition.dateFin) }}</span>
+        </div>
+        <span [class]="'competition-status ' + getClasseEtatCompetition(competition.etatCompetition)">
+          {{ competition.etatCompetition }}
+        </span>
+      </div>
+    </div>
+    <div *ngIf="filtrerCompetitionsParSport().length === 0" class="empty-state">
+      <p>Aucune compétition à venir pour le moment.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Section Mes équipes -->
+<div class="section-container equipes-section">
+  <div class="section-header">
+    <h2>Mes équipes</h2>
+    <button class="btn-action">Gérer mes équipes</button>
+  </div>
+  <div class="cards-container">
+    <div *ngFor="let equipe of mesEquipes" class="equipe-card">
+      <div class="equipe-image">
+        <img [src]="equipe.imageURL || 'assets/images/default-team.png'" [alt]="equipe.nom_equipe">
+      </div>
+      <div class="equipe-info">
+        <h3>{{ equipe.nom_equipe }}</h3>
+        <p><i class="fas fa-users"></i> {{ equipe.nbr_joueurs }} joueurs</p>
+      </div>
+    </div>
+    <div *ngIf="mesEquipes.length === 0" class="empty-state">
+      <p>Vous n'avez pas encore d'équipes.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Section Demandes en attente -->
+<div class="section-container demandes-section">
+  <div class="section-header">
+    <h2>Dernier Demandes</h2>
+  </div>
+  <div class="table-container">
+    <table *ngIf="mesDemandes.length > 0" class="demandes-table">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Date de demande</th>
+          <th>Objet</th>
+          <th>État</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let demande of mesDemandes">
+          <td>{{ demande.typeDemande }}</td>
+          <td>{{ formaterDate(demande.dateDemande) }}</td>
+          <td>{{ demande.objet }}</td>
+          <td>
+            <span [class]="'demande-status ' + getClasseEtatDemande(demande.etatReservation)">
+              {{ demande.etatReservation }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="mesDemandes.length === 0" class="empty-state">
+      <p>Aucune demande en attente pour le moment.</p>
+    </div>
+  </div>
+</div>
+</div> </div>

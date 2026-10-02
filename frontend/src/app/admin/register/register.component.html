@@ -1,0 +1,21 @@
+<div class="page-background">
+
+<div class="auth-wrapper">
+    <div class="auth-image">
+      <img src="../../../assets/Register_Admin.jpg" alt="Admin Register Image" />
+    </div>
+  
+    <div class="auth-container">
+      <form (ngSubmit)="register()" #registerForm="ngForm" class="auth-form">
+        <h2>Inscription Admin</h2>
+        
+        <input type="text" name="nom" [(ngModel)]="admin.nom" placeholder="Nom" required />
+        <input type="email" name="email" [(ngModel)]="admin.email" placeholder="Email" required />
+        <input type="password" name="password" [(ngModel)]="admin.password" placeholder="Mot de passe" required />
+        
+        <button type="submit">S'inscrire</button>
+        <p class="link-text">Déjà inscrit ? <a routerLink="/admin/login">Se connecter</a></p>
+      </form>
+    </div>
+  </div>
+</div>

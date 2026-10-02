@@ -1,0 +1,450 @@
+/* Menu Section - Amélioré */
+#menu {
+	padding: 60px 0;
+	position: relative;
+	background-color: #f8f9fa;
+  }
+  
+  .title-center {
+	text-align: center;
+	margin-bottom: 40px;
+  }
+  
+  .title-with-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 15px;
+	font-size: 2.2rem;
+	color: #2c3e50;
+	font-weight: 700;
+	position: relative;
+	padding-bottom: 15px;
+  }
+  
+  .title-with-icon::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 80px;
+	height: 3px;
+	background-color: #ffcc33;
+  }
+  
+  .title-with-icon img {
+	width: 45px;
+	height: 45px;
+	object-fit: contain;
+  }
+  
+  /* Categories */
+  .categories-container {
+	margin-bottom: 40px;
+  }
+  
+  .category-nav {
+	background: #2c3e50;
+	padding: 12px 0;
+	box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	border-radius: 8px;
+  }
+  
+  .category-list {
+	display: flex;
+	justify-content: center;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	flex-wrap: wrap;
+  }
+  
+  .category-list li a {
+	padding: 8px 20px;
+	margin: 0 5px;
+	color: #fff;
+	text-decoration: none;
+	font-weight: 500;
+	text-transform: uppercase;
+	font-size: 14px;
+	border-radius: 25px;
+	transition: all 0.3s ease;
+	cursor: pointer;
+  }
+  
+  .category-list li a:hover {
+	background: rgba(255, 204, 51, 0.2);
+  }
+  
+  .category-list li a.active {
+	background: #ffcc33;
+	color: #2c3e50;
+	font-weight: 600;
+	box-shadow: 0 2px 10px rgba(255, 204, 51, 0.3);
+  }
+  
+  /* Menu Grid */
+  .menu-grid {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 20px;
+  }
+  
+  .menu-items-container {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+	gap: 3px;
+	padding: 20px 0;
+  }
+  
+ /* Menu Card - Version optimisée */
+.menu-card {
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+	transition: all 0.3s;
+	border: 1px solid #eaeaea;
+	max-width: 280px; /* Largeur réduite */
+  }
+  
+  .menu-card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+  
+  .menu-card-image {
+	height: 160px;
+	overflow: hidden;
+  }
+  
+  .menu-card-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.4s;
+  }
+  
+  .menu-card:hover .menu-card-image img {
+	transform: scale(1.05);
+  }
+  
+  .menu-card-content {
+	padding: 15px;
+  }
+  
+  .menu-card-content h3 {
+	margin: 0 0 8px;
+	font-size: 18px;
+	color: #2c3e50;
+	font-weight: 600;
+  }
+  
+  .description {
+	font-size: 14px;
+	color: #5d6d7e;
+	margin-bottom: 10px;
+	height: 38px;
+	overflow: hidden;
+	height: 30px; /* Hauteur réduite */
+  }
+  
+  .competition-info {
+	border-top: 1px solid #f1f1f1;
+	border-bottom: 1px solid #f1f1f1;
+	padding: 8px 0;
+	margin-bottom: 10px;
+  }
+  
+  .info-item {
+	display: flex;
+	margin-bottom: 5px;
+	font-size: 13px;
+  }
+  
+  .info-label {
+	color: #7f8c8d;
+	width: 70px;
+	font-weight: 500;
+  }
+  
+  .info-value {
+	color: #34495e;
+  }
+  
+  .price-order {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 10px;
+  }
+  
+  .status {
+	font-size: 13px;
+	font-weight: 600;
+	padding: 4px 10px;
+	border-radius: 15px;
+  }
+  
+  .status-active { background-color: #2ecc71; color: white; }
+  .status-completed { background-color: #3498db; color: white; }
+  .status-upcoming { background-color: #f39c12; color: white; }
+  .status-cancelled { background-color: #e74c3c; color: white; }
+  
+  .order-button {
+	background: #ffcc33;
+	color: #2c3e50;
+	border: none;
+	padding: 6px 15px;
+	border-radius: 20px;
+	cursor: pointer;
+	transition: all 0.3s;
+	font-weight: 600;
+	font-size: 13px;
+  }
+  
+  .order-button:hover {
+	background: #e6b800;
+	transform: translateY(-2px);
+  }
+  
+  .no-items {
+	text-align: center;
+	padding: 40px 0;
+	font-size: 18px;
+	color: #7f8c8d;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+	.menu-items-container {
+	  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	}
+	
+	.category-list li a {
+	  margin: 5px;
+	  padding: 6px 15px;
+	  font-size: 13px;
+	}
+  }
+
+  /* Modal de détails de la compétition *//* Modal de détails de la compétition avec typographie améliorée */
+.competition-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+	padding: 20px;
+	font-family: 'Roboto', Arial, sans-serif;
+  }
+  
+  .modal-content {
+	background-color: white;
+	border-radius: 12px;
+	width: 90%;
+	max-width: 800px;
+	max-height: 90vh;
+	position: relative;
+	overflow: hidden;
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+	animation: modalFadeIn 0.3s;
+  }
+  
+  @keyframes modalFadeIn {
+	from { opacity: 0; transform: translateY(-20px); }
+	to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .close-button {
+	position: absolute;
+	top: 12px;
+	right: 15px;
+	font-size: 28px;
+	background: rgba(255, 255, 255, 0.2);
+	border: none;
+	color: #e74c3c;
+	cursor: pointer;
+	z-index: 10;
+	width: 36px;
+	height: 36px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	transition: all 0.2s;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .close-button:hover {
+	background-color: #e74c3c;
+	color: white;
+	transform: rotate(90deg);
+  }
+  
+  .modal-body {
+	display: flex;
+	height: 100%;
+  }
+  
+  .modal-image {
+	flex: 0 0 40%;
+	overflow: hidden;
+	position: relative;
+  }
+  
+  .modal-image::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 40px;
+	height: 100%;
+	background: linear-gradient(to left, rgba(255,255,255,0.8), transparent);
+  }
+  
+  .modal-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+  }
+  
+  .modal-info {
+	flex: 0 0 60%;
+	padding: 30px;
+	overflow-y: auto;
+	background: linear-gradient(to bottom, #f9f9f9, #ffffff);
+  }
+  
+  .modal-info h2 {
+	margin-top: 0;
+	color: #2c3e50;
+	font-size: 28px;
+	font-weight: 700;
+	margin-bottom: 15px;
+	border-bottom: 3px solid #ffcc33;
+	padding-bottom: 10px;
+	display: inline-block;
+  }
+  
+  .modal-description {
+	margin-bottom: 25px;
+	line-height: 1.6;
+	color: #5d6d7e;
+	font-size: 15px;
+	text-align: justify;
+	padding: 10px;
+	background-color: rgba(236, 240, 241, 0.5);
+	border-radius: 8px;
+	border-left: 4px solid #3498db;
+  }
+  
+  .modal-detail-items {
+	background: rgba(255, 255, 255, 0.7);
+	border-radius: 10px;
+	padding: 15px;
+	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .modal-detail-item {
+	display: flex;
+	margin-bottom: 15px;
+	align-items: center;
+	padding-bottom: 10px;
+	border-bottom: 1px dashed #ddd;
+  }
+  
+  .modal-detail-item:last-child {
+	border-bottom: none;
+	margin-bottom: 0;
+  }
+  
+  .detail-label {
+	color: #7f8c8d;
+	font-weight: 600;
+	width: 120px;
+	flex-shrink: 0;
+	position: relative;
+	font-size: 14px;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+  }
+  
+  .detail-label::after {
+	content: ':';
+	position: absolute;
+	right: 10px;
+	color: #bdc3c7;
+  }
+  
+  .detail-value {
+	color: #34495e;
+	font-weight: 500;
+	font-size: 15px;
+  }
+  
+  /* Status badges avec couleurs spécifiques */
+  .status-badge {
+	padding: 6px 14px;
+	border-radius: 20px;
+	font-size: 12px;
+	font-weight: 600;
+	display: inline-block;
+	letter-spacing: 0.5px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .status-active {
+	background: linear-gradient(135deg, #2ecc71, #27ae60);
+	color: white;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+  
+  .status-completed {
+	background: linear-gradient(135deg, #3498db, #2980b9);
+	color: white;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+  
+  .status-upcoming {
+	background: linear-gradient(135deg, #f39c12, #e67e22);
+	color: white;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+  
+  .status-cancelled {
+	background: linear-gradient(135deg, #e74c3c, #c0392b);
+	color: white;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Responsive pour les écrans plus petits */
+  @media (max-width: 768px) {
+	.modal-body {
+	  flex-direction: column;
+	}
+	
+	.modal-image, .modal-info {
+	  flex: 0 0 100%;
+	}
+	
+	.modal-image {
+	  height: 200px;
+	}
+	
+	.modal-image::after {
+	  display: none;
+	}
+	
+	.modal-info h2 {
+	  font-size: 22px;
+	}
+  }

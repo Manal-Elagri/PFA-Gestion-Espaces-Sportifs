@@ -1,0 +1,66 @@
+<div class="navbar" [class.isTransparentBg]="isTransparentBg">
+	<a id="logo" href="#home">
+		<img src="../../assets/logo-ensaj.png" alt="Logo" style="height: 80px;">
+		<span class="navbar-brand">SPORT&ENSAJ</span>
+	</a>
+	
+
+	<a
+		id="openmenu"
+		href="#"
+		*ngIf="isSmallScreen"
+		data-bs-toggle="offcanvas"
+		data-bs-target="#offcanvasScrolling"
+		aria-controls="offcanvasScrolling"
+		(click)="toggleMenu()"
+	>
+		<i class="fa-solid fa-bars"></i>
+	</a>
+
+	<!-- Menu for larger screens -->
+	<nav id="nav" [ngStyle]="{ display: !isSmallScreen ? 'flex' : 'none' }">
+		<ul class="menu-big p-0">
+			<li *ngFor="let item of menuItems">
+				<a
+				  [href]="item.link"
+				  [class.active]="activeSection === item.link.slice(1)"
+				  (click)="onMenuItemClick($event, item)"
+				>
+				  {{ item.label }}
+				</a>
+			  </li>
+			  
+			  
+		</ul>
+	</nav>
+</div>
+
+<!-- Offcanvas for smaller screens -->
+<div
+	class="offcanvas offcanvas-start"
+	data-bs-scroll="true"
+	data-bs-backdrop="false"
+	tabindex="-1"
+	id="offcanvasScrolling"
+	aria-labelledby="offcanvasScrollingLabel"
+>
+	<div class="offcanvas-header justify-content-end">
+		<i
+			class="fa-solid fa-xmark"
+			data-bs-dismiss="offcanvas"
+			aria-label="Close"
+			(click)="toggleMenu()"
+		></i>
+	</div>
+	<div class="offcanvas-body">
+		<!-- Menu for the offcanvas -->
+		<ul class="menu-small">
+			<li *ngFor="let item of menuItems" class="mb-3">
+				<a [href]="item.link" (click)="closeMenu()">{{ item.label }}</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<!-- Ajoutez ceci à la fin de votre fichier navbar.component.html -->
+<app-mon-espace-popup></app-mon-espace-popup>
+

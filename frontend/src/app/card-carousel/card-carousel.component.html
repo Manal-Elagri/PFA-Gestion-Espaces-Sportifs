@@ -1,0 +1,27 @@
+<div class="container mt-5">
+    <carousel
+      #carousel
+      [itemsPerSlide]="4"
+      [singleSlideOffset]="true"
+      [interval]="0"
+      (mouseenter)="stopAutoplay()"
+      (mouseleave)="startAutoplay()"
+    >
+      <slide *ngFor="let competition of carouselItems">
+        <div class="card">
+          <img [src]="competition.imageURL || '../../assets/default-competition.jpg'" alt="{{ competition.nom }}" />
+          <h3>{{ competition.nom }}</h3>
+        </div>
+      </slide>
+    </carousel>
+  
+    <div class="carousel-nav">
+      <button (click)="slidePrev()">
+        <i class="fas fa-long-arrow-alt-left"></i>
+      </button>
+      <button (click)="slideNext()">
+        <i class="fas fa-long-arrow-alt-right"></i>
+      </button>
+    </div>
+  </div>
+  

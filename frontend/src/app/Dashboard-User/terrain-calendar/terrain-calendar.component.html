@@ -1,0 +1,49 @@
+<div class="calendar-container">
+  <div class="calendar-header">
+    <button class="calendar-nav-btn" (click)="previousMonth()">
+      <i class="material-icons">chevron_left</i>
+    </button>
+    <h3 class="calendar-title">{{ formatMonthYear() }}</h3>
+    <button class="calendar-nav-btn" (click)="nextMonth()">
+      <i class="material-icons">chevron_right</i>
+    </button>
+  </div>
+  
+  <div class="calendar-weekdays">
+    <div class="weekday" *ngFor="let day of weekdays">{{ day }}</div>
+  </div>
+  
+  <div class="calendar-days" *ngIf="!isLoading">
+    <div 
+      *ngFor="let day of calendarDays" 
+      class="calendar-day" 
+      [class.other-month]="!day.isCurrentMonth"
+      [class.available]="day.isAvailable && day.isCurrentMonth"
+      [class.unavailable]="!day.isAvailable && day.isCurrentMonth"
+      [class.selected]="day.isSelected"
+      (click)="selectDate(day.date)"
+    >
+      {{ day.date.getDate() }}
+    </div>
+  </div>
+  
+  <div class="calendar-loading" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Chargement du calendrier...</p>
+  </div>
+  
+  <div class="calendar-legend">
+    <div class="legend-item">
+      <div class="legend-color available"></div>
+      <span>Disponible</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color unavailable"></div>
+      <span>Réservé</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color selected"></div>
+      <span>Sélectionné</span>
+    </div>
+  </div>
+</div>

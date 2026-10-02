@@ -1,0 +1,150 @@
+<div class="equipe-container">
+  <!-- Partie dashboard -->
+  <div class="dashboard">
+    <div class="stat-card">
+      <div class="stat-value">{{ totalDemandes }}</div>
+      <div class="stat-label">Demandes totales</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ totalEquipesApprouvees }}</div>
+      <div class="stat-label">Équipes approuvées</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ totalDemandes - totalEquipesApprouvees }}</div>
+      <div class="stat-label">En attente/Refusées</div>
+    </div>
+  </div>
+
+  <!-- Message d'erreur global -->
+  <div class="error-container" *ngIf="errorMessage">
+    <div class="error-message">{{ errorMessage }}</div>
+  </div>
+
+  <!-- Liste des demandes en mode paysage -->
+  <div class="demandes-section">
+    <h2>Mes demandes d'équipes</h2>
+    <div *ngIf="isLoading" class="loading">Chargement en cours...</div>
+    
+    <div *ngIf="!isLoading && demandes.length === 0" class="no-data">
+      Vous n'avez pas encore créé de demande d'équipe.
+    </div>
+    
+    <div class="demandes-list-landscape" *ngIf="!isLoading && demandes.length > 0">
+      <div class="demande-card-landscape" *ngFor="let demande of demandes">
+        <div class="demande-logo" *ngIf="demande.imageURL">
+          <img [src]="demande.imageURL" alt="{{ demande.nom }}">
+        </div>
+        <div class="demande-info-container">
+          <div class="demande-title">{{ demande.nom }}</div>
+          <div class="demande-details-row">
+            <div class="demande-info">
+              <span class="info-label">Nombre de joueurs:</span> {{ demande.nbrJoueurs }}
+            </div>
+            <div class="demande-info">
+              <span class="info-label">Date:</span> {{ demande.dateCreation | date:'dd/MM/yyyy' }}
+            </div>
+          </div>
+          <div class="demande-info" *ngIf="demande.commentaireAdmin">
+            <span class="info-label">Commentaire:</span> {{ demande.commentaireAdmin }}
+          </div>
+        </div>
+        <div class="demande-status-container">
+          <div class="demande-status" [ngClass]="getStatusClass(demande.etat)">
+            {{ getStatusText(demande.etat) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section des équipes approuvées -->
+  <div class="equipes-section">
+    <h2>Mes équipes</h2>
+    <div *ngIf="isLoading" class="loading">Chargement en cours...</div>
+    
+    <div *ngIf="!isLoading && getApprovedDemandes().length === 0" class="no-data">
+      Vous n'avez pas encore d'équipes approuvées.
+    </div>
+    
+    <div class="equipes-list-landscape" *ngIf="!isLoading && getApprovedDemandes().length > 0">
+      <div class="equipe-card-landscape" *ngFor="let demande of getApprovedDemandes()">
+        <div class="equipe-logo" *ngIf="demande.imageURL">
+          <img [src]="demande.imageURL" alt="{{ demande.nom }}">
+        </div>
+        <div class="equipe-info-container">
+          <h3>{{ demande.nom }}</h3>
+          <div class="equipe-details-row">
+            <p><span class="info-label">Nombre de joueurs:</span> {{ demande.nbrJoueurs }}</p>
+            <p><span class="info-label">Date de création:</span> {{ demande.dateTraitement | date:'dd/MM/yyyy' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bouton pour créer une nouvelle équipe (en bas) -->
+  <div class="create-equipe-section">
+    <div class="create-equipe-message">
+      Passez votre demande pour créer votre équipe sportive et participez aux compétitions !
+    </div>
+    <div class="action-container">
+      <button class="create-btn" (click)="toggleForm()">
+        {{ isFormVisible ? 'Annuler' : 'Créer votre équipe' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Formulaire de création (affiché conditionnellement) -->
+  <div class="form-container" *ngIf="isFormVisible">
+    <h2>Créer une demande d'équipe</h2>
+    <form [formGroup]="equipeForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="nom">Nom de l'équipe</label>
+        <input 
+          type="text" 
+          id="nom" 
+          formControlName="nom" 
+          placeholder="Nom de l'équipe"
+          [ngClass]="{'invalid-input': formSubmitted && equipeForm.get('nom')?.invalid}"
+        >
+        <div class="error-message" *ngIf="formSubmitted && equipeForm.get('nom')?.invalid">
+          Le nom de l'équipe est obligatoire
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="nbrJoueurs">Nombre de joueurs</label>
+        <input 
+          type="number" 
+          id="nbrJoueurs" 
+          formControlName="nbrJoueurs" 
+          placeholder="Nombre de joueurs"
+          min="1"
+          max="50"
+          [ngClass]="{'invalid-input': formSubmitted && equipeForm.get('nbrJoueurs')?.invalid}"
+        >
+        <div class="error-message" *ngIf="formSubmitted && equipeForm.get('nbrJoueurs')?.invalid">
+          <span *ngIf="equipeForm.get('nbrJoueurs')?.errors?.['required']">Le nombre de joueurs est obligatoire</span>
+          <span *ngIf="equipeForm.get('nbrJoueurs')?.errors?.['min']">Le nombre minimum de joueurs est 1</span>
+          <span *ngIf="equipeForm.get('nbrJoueurs')?.errors?.['max']">Le nombre maximum de joueurs est 20</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="form-group full-width">
+          <label class="form-label">Logo de l'équipe</label>
+          <input type="file" class="form-control" (change)="onFileSelected($event)" />
+          <div class="error-message" *ngIf="formSubmitted && !selectedFile">
+            L'image est obligatoire
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="submit-btn" [disabled]="isLoading">
+          {{ isLoading ? 'Création en cours...' : 'Soumettre la demande' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,246 @@
+<div class="admin-demandes-container">
+    <!-- En-tête avec statistiques -->
+    <div class="statistics-cards">
+      <div class="stats-card total">
+        <div class="stats-icon">
+          <i class="fas fa-list-alt"></i>
+        </div>
+        <div class="stats-info">
+          <h3>Total Demandes</h3>
+          <p class="stats-number">{{totalDemandes}}</p>
+        </div>
+      </div>
+      
+      <div class="stats-card club">
+        <div class="stats-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="stats-info">
+          <h3>Demandes Club</h3>
+          <p class="stats-number">{{totalClub}}</p>
+        </div>
+      </div>
+      
+      <div class="stats-card equipe">
+        <div class="stats-icon">
+          <i class="fas fa-futbol"></i>
+        </div>
+        <div class="stats-info">
+          <h3>Demandes Équipe</h3>
+          <p class="stats-number">{{totalEquipe}}</p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Onglets de navigation -->
+    <div class="tabs-container">
+      <div class="tab" [class.active]="activeTab === 'demandes'" (click)="changeTab('demandes')">
+        <i class="fas fa-list-alt"></i> Demandes en attente
+      </div>
+      <div class="tab" [class.active]="activeTab === 'clubs'" (click)="changeTab('clubs')">
+        <i class="fas fa-users"></i> Clubs approuvés <span class="count-badge">{{totalClubsApprouves}}</span>
+      </div>
+      <div class="tab" [class.active]="activeTab === 'equipes'" (click)="changeTab('equipes')">
+        <i class="fas fa-futbol"></i> Équipes approuvées <span class="count-badge">{{totalEquipesApprouvees}}</span>
+      </div>
+    </div>
+  
+    <!-- Messages -->
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+  
+    <!-- Contenu des onglets -->
+    <div class="tab-content">
+      <!-- Onglet Demandes -->
+      <div *ngIf="activeTab === 'demandes'" class="demandes-table-container">
+        <h2>Liste des demandes en attente</h2>
+        
+        <div *ngIf="loading" class="loading-spinner">
+          <div class="spinner"></div>
+          <p>Chargement des demandes...</p>
+        </div>
+        
+        <table *ngIf="!loading && demandes.length > 0" class="demandes-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Type</th>
+              <th>Nom</th>
+              <th>Détails</th>
+              <th>Responsable</th>
+              <th>Date de création</th>
+              <th>État</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let demande of demandes">
+              <td>{{ demande.id }}</td>
+              <td>
+                <span class="badge" [ngClass]="demande.typeDemande === 'CLUB' ? 'badge-club' : 'badge-equipe'">
+                  {{ demande.typeDemande }}
+                </span>
+              </td>
+              <td>{{ demande.nom }}</td>
+              <td>
+                <ng-container *ngIf="demande.typeDemande === 'CLUB'">
+                  Établissement: {{ demande.etablissement }}
+                </ng-container>
+                <ng-container *ngIf="demande.typeDemande === 'EQUIPE'">
+                  Nombre de joueurs: {{ demande.nbrJoueurs }}
+                </ng-container>
+              </td>
+              <td>{{ demande.responsable?.nom_responsable }} {{ demande.responsable?.prenom_responsable }}</td>
+              <td>{{ formatDate(demande.dateCreation) }}</td>
+              <td>
+                <span class="status-badge" [ngClass]="getStatusClass(demande.etat)">
+                  {{ demande.etat }}
+                </span>
+              </td>
+              <td class="actions-cell">
+                <button class="btn-approve" (click)="openModal(demande, 'approuver')" 
+                        [disabled]="demande.etat !== 'EN_ATTENTE'">
+                  <i class="fas fa-check"></i> Approuver
+                </button>
+                <button class="btn-reject" (click)="openModal(demande, 'refuser')"
+                        [disabled]="demande.etat !== 'EN_ATTENTE'">
+                  <i class="fas fa-times"></i> Refuser
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <div *ngIf="!loading && demandes.length === 0" class="no-data">
+          <i class="fas fa-info-circle"></i>
+          <p>Aucune demande en attente pour le moment.</p>
+        </div>
+      </div>
+  
+      <!-- Onglet Clubs -->
+      <div *ngIf="activeTab === 'clubs'" class="clubs-table-container">
+        <h2>Liste des clubs approuvés</h2>
+        
+        <div *ngIf="loading" class="loading-spinner">
+          <div class="spinner"></div>
+          <p>Chargement des clubs...</p>
+        </div>
+        
+        <table *ngIf="!loading && clubs.length > 0" class="clubs-table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Nom</th>
+              <th>Établissement</th>
+              <th>Responsable</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let club of clubs">
+                <td>
+                    <img [src]="club.imageURL" alt="Logo Club" width="80" height="80" />
+                </td>
+              <td>{{ club.nom }}</td>
+              <td>{{ club.etablissement }}</td>
+              <td>{{ club.responsable?.nom_responsable }} {{ club.responsable?.prenom_responsable }}</td>
+              
+            </tr>
+          </tbody>
+        </table>
+        
+        <div *ngIf="!loading && clubs.length === 0" class="no-data">
+          <i class="fas fa-info-circle"></i>
+          <p>Aucun club approuvé pour le moment.</p>
+        </div>
+      </div>
+  
+      <!-- Onglet Équipes -->
+      <div *ngIf="activeTab === 'equipes'" class="equipes-table-container">
+        <h2>Liste des équipes approuvées</h2>
+        
+        <div *ngIf="loading" class="loading-spinner">
+          <div class="spinner"></div>
+          <p>Chargement des équipes...</p>
+        </div>
+        
+        <table *ngIf="!loading && equipes.length > 0" class="equipes-table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Nom</th>
+              <th>Nombre de joueurs</th>
+              <th>Responsable</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let equipe of equipes">
+                <td>
+                    <img [src]="equipe.imageURL" alt="Logo Équipe" width="80" height="80" />
+                </td>
+                  
+              <td>{{ equipe.nom_equipe }}</td>
+              <td>{{ equipe.nbr_joueurs }}</td>
+              <td>{{ equipe.responsable?.nom_responsable }} {{ equipe.responsable?.prenom_responsable }}</td>
+            
+            </tr>
+          </tbody>
+        </table>
+        
+        <div *ngIf="!loading && equipes.length === 0" class="no-data">
+          <i class="fas fa-info-circle"></i>
+          <p>Aucune équipe approuvée pour le moment.</p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Modal pour approbation/refus -->
+    <div class="modal-overlay" *ngIf="selectedDemandeId" (click)="closeModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h3 *ngIf="modalAction === 'approuver'">Approuver la demande</h3>
+          <h3 *ngIf="modalAction === 'refuser'">Refuser la demande</h3>
+          <button class="close-btn" (click)="closeModal()">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+          <form [formGroup]="commentaireForm" (ngSubmit)="submitAction()">
+            <div class="form-group">
+              <label for="commentaire">Commentaire</label>
+              <textarea
+                id="commentaire"
+                formControlName="commentaire"
+                rows="4"
+                placeholder="Ajoutez un commentaire pour le responsable..."
+              ></textarea>
+              <div *ngIf="commentaireForm.get('commentaire')?.invalid && commentaireForm.get('commentaire')?.touched" 
+                   class="error-message">
+                Le commentaire est requis
+              </div>
+            </div>
+            
+            <div class="form-actions">
+              <button type="button" class="btn-cancel" (click)="closeModal()">Annuler</button>
+              <button 
+                type="submit" 
+                [ngClass]="modalAction === 'approuver' ? 'btn-approve' : 'btn-reject'"
+                [disabled]="commentaireForm.invalid || loading"
+              >
+                <span *ngIf="loading">
+                  <i class="fas fa-spinner fa-spin"></i>
+                </span>
+                <span *ngIf="!loading">
+                  <i *ngIf="modalAction === 'approuver'" class="fas fa-check"></i>
+                  <i *ngIf="modalAction === 'refuser'" class="fas fa-times"></i>
+                </span>
+                {{ modalAction === 'approuver' ? 'Confirmer l\'approbation' : 'Confirmer le refus' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

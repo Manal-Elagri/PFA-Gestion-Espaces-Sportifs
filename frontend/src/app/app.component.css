@@ -1,0 +1,75 @@
+/* HOME */
+#home {
+	min-height: 750px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: top center;
+	background-attachment: fixed;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	perspective: 1000px;
+	overflow: hidden;
+  }
+  
+  .wrapper.home-content h1 {
+	margin-bottom: 30px;
+	transform: scale(1);
+	transition: transform 0.5s ease-in-out;
+	opacity: 1;
+	transition: opacity 0.5s ease-in-out;
+  }
+  
+  .wrapper.home-content > div .btn {
+	margin-top: 30px;
+	transform: translateY(0);
+	transition: transform 0.5s ease-in-out;
+  }
+  
+  /* Offer */
+  #offer {
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+	background-attachment: fixed;
+	perspective: 1000px;
+	overflow: hidden;
+  }
+  
+  #offer h2 {
+	font-size: 40px;
+	margin-bottom: 20px;
+	background-image: none;
+	transform: translateY(0);
+	transition: transform 0.5s ease-in-out;
+	opacity: 1;
+	transition: opacity 0.5s ease-in-out;
+  }
+  
+  /* Gallery */
+  .wrapper.flex-row.gallery-item {
+	margin-top: 50px;
+	display: flex;
+	justify-content: flex-start;
+  }
+  
+  .wrapper.flex-row.gallery-item a:hover img {
+	filter: brightness(0.5);
+	transition: filter 0.5s ease-in-out;
+  }
+  
+  .wrapper.flex-row.gallery-item a img {
+	width: 100%;
+	display: block;
+	transition: transform 0.5s ease-in-out;
+  }
+  
+  /* General Hover Effect */
+  .hover-effect {
+	transition: transform 0.5s ease-in-out;
+  }
+  
+  .hover-effect:hover {
+	transform: scale(1.1);
+  }
+  

@@ -1,0 +1,97 @@
+<div class="login-container">
+  <div class="auth-card-wrapper">
+    <!-- Container d'image -->
+    <div class="image-container">
+      <img src="../../assets/login-respo.jpg" alt="Admin Login Image" class="login-image">
+    </div>
+    
+    <!-- Container du formulaire -->
+    <div class="form-container">
+      <!-- Bouton de fermeture déplacé au formulaire -->
+      <button class="close-btn">&times;</button>
+      
+      <div class="form-header">
+        <h2>Connexion</h2>
+        <p>Accédez à votre compte</p>
+        <button class="close-btn" (click)="closeForm()">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      
+      <form (ngSubmit)="login()" #loginForm="ngForm">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" class="form-control" name="email" [(ngModel)]="loginData.email" required>
+        </div>
+        
+        <div class="mb-3">
+          <label for="password" class="form-label">Mot de passe</label>
+          <input type="password" id="password" class="form-control" name="password" [(ngModel)]="loginData.password" required>
+        </div>
+        
+        <div *ngIf="errorMessage" class="alert alert-danger mt-2">{{ errorMessage }}</div>
+        
+        <div class="form-actions">
+          <button type="submit">Se connecter</button>
+          
+          <!-- Mot de passe oublié déplacé après le bouton -->
+          <div class="mt-2">
+            <a href="javascript:void(0)" (click)="showForgotPasswordForm()" class="forgot-password-link">Mot de passe oublié?</a>
+          </div>
+          
+          <p>Pas encore de compte ? <a routerLink="">S'inscrire</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+   <!-- Modal pour mot de passe oublié -->
+   <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="forgotPasswordModalLabel">Réinitialisation du mot de passe</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div *ngIf="forgotPasswordMessage" [ngClass]="{'alert alert-success': forgotPasswordSuccess, 'alert alert-danger': !forgotPasswordSuccess}">
+            {{ forgotPasswordMessage }}
+          </div>
+          
+          <form [formGroup]="forgotPasswordForm" (ngSubmit)="onForgotPasswordSubmit()">
+            <div class="mb-3">
+              <label for="resetEmail" class="form-label">Adresse email</label>
+              <input type="email" class="form-control" id="resetEmail" formControlName="email"
+                     placeholder="Entrez l'email utilisé lors de l'inscription">
+              <div *ngIf="forgotPasswordSubmitted && forgotPasswordForm.get('email')?.errors" class="invalid-feedback d-block">
+                <div *ngIf="forgotPasswordForm.get('email')?.errors?.['required']">L'email est obligatoire</div>
+                <div *ngIf="forgotPasswordForm.get('email')?.errors?.['email']">Entrez un email valide</div>
+              </div>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn-primary" [disabled]="forgotPasswordLoading">
+                <span *ngIf="forgotPasswordLoading" class="spinner-border spinner-border-sm me-2"></span>
+                Envoyer le lien de réinitialisation
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Style pour le lien "Mot de passe oublié" -->
+<style>
+  .forgot-password-link {
+    font-size: 13px;
+    color: #4e54c8;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .forgot-password-link:hover {
+    color: #8f94fb;
+    text-decoration: underline;
+  }
+</style>
