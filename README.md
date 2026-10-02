@@ -118,7 +118,7 @@ Les principales interfaces de l'application sont présentées ci-dessous.
 
 ### 🏆 Compétitions
 
-![Compétitions](screenshots/competitions.png)
+![Compétitions](screenshots/espace_admin_3.png)
 
 ### 🛠️ Tableau de bord administrateur
 
